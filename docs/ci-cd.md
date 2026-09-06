@@ -8,20 +8,25 @@ images; production images and provider releases require a reviewed annotated tag
 
 | Workflow | Trigger | External effect |
 | --- | --- | --- |
-| CI | `main`, `develop`, merge requests, and supported version tags | None |
+| CI | `main`, `develop`, merge requests, and every pushed tag | None |
+| Python package gate | Any tag | Validates the annotated tag and smoke-tests canonical PEP 440 artifacts without publishing |
 | Development image | `develop` or `dev` | Publishes `dev` and commit-SHA tags |
-| Production image | Existing annotated `v*` release tag | Publishes the exact tag; stable releases also update `latest` |
-| Provider release | Existing annotated `v*` release tag | Creates a release with Python artifacts |
+| Production image | Validated protected release tag | Publishes the exact tag; stable releases also update `latest` |
+| Private Python package | Validated protected release tag | Publishes an immutable wheel and sdist to GitLab's project PyPI registry |
+| Provider release | Validated protected release tag | Creates a release after image and package publication |
 
 CI tests Python 3.11, the package compatibility floor, and Python 3.14, the
 standard development and container runtime.
 
 ## Release safeguards
 
-Production jobs require a supported SemVer-oriented tag such as `v1.0.0` or
-`v1.0.0-rc.1`, an annotated tag object, a non-empty tag message, and a package
-version that agrees with the tag. Manual GitHub runs select an existing tag;
-they do not create one.
+The package gate requires a supported release tag, an annotated tag object, a
+non-empty tag message, and package artifacts whose filenames and embedded
+metadata agree with the normalized version. An unprotected tag completes this
+validation without failing, but its production image, package upload, and
+release jobs are skipped. Those external publication jobs additionally require
+GitLab protected-tag status. Manual GitHub runs select an existing tag; they do
+not create one.
 
 GitHub images use `ghcr.io/<owner>/<repository>:<tag>`. GitLab uses
 `$CI_REGISTRY_IMAGE:<tag>`. Forks and disposable repositories therefore remain
@@ -29,6 +34,30 @@ inside their own registry namespace. Prereleases never update `latest`.
 
 The complete annotated tag message becomes the public provider release
 description. Wheel and source-distribution artifacts are attached or linked.
+
+## GitLab package version policy
+
+`.gitlab/python-package.yml` converts supported SemVer spellings to canonical
+PEP 440 before building the private Python package:
+
+| Release tag | Package version |
+| --- | --- |
+| `v1.0.0` | `1.0.0` |
+| `v1.0.0-alpha.1` | `1.0.0a1` |
+| `v1.0.0-beta.1` | `1.0.0b1` |
+| `v1.0.0-rc.1` | `1.0.0rc1` |
+| `v1.0.0-dev.1` | `1.0.0.dev1` |
+| `v1.0.0.post1` | `1.0.0.post1` |
+
+Canonical PEP 440 tags are accepted too. Unknown labels, missing numeric
+identifiers, build metadata, and ambiguous `-post.N` tags fail before any
+publication. GitLab versions are immutable, so duplicate uploads fail rather
+than overwriting or silently skipping existing packages.
+
+The upload uses the short-lived `CI_JOB_TOKEN`. Maintainers must protect release
+tag patterns in GitLab; consumers should use a deploy token with
+`read_package_registry`. For strictly private resolution, disable package
+forwarding in the GitLab group settings.
 
 ## Planned 1.0 message sequence
 

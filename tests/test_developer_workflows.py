@@ -69,10 +69,20 @@ def test_release_workflows_enforce_reviewed_tag_publication() -> None:
     gitlab_development = _read(".gitlab/docker-dev.yml")
     gitlab_production = _read(".gitlab/docker-prod.yml")
     gitlab_release = _read(".gitlab/release.yml")
+    gitlab_package = _read(".gitlab/python-package.yml")
 
-    for text in (production, release, gitlab_production, gitlab_release):
+    for text in (production, release):
         assert "annotated Git tag" in text
         assert "rc|dev|post" in text
+
+    assert "annotated Git tag" in gitlab_package
+    assert "CI_COMMIT_REF_PROTECTED" in gitlab_package
+    assert "CI_JOB_TOKEN" in gitlab_package
+    assert "scripts/ci/package_version.py" in gitlab_package
+    assert (
+        "Unprotected tag detected; validating package artifacts only" in gitlab_package
+    )
+    assert "publication requires a protected release tag" not in gitlab_package
 
     assert "branches:" not in production
     assert "steps.vars.outputs.image_name" in production
@@ -82,7 +92,33 @@ def test_release_workflows_enforce_reviewed_tag_publication() -> None:
     assert "docker/prod/Dockerfile" not in gitlab_production
     assert "--target development" in gitlab_development
     assert "--target production" in gitlab_production
+    assert "job: package:build" in gitlab_production
+    assert "job: package:publish" in gitlab_release
+    assert "job: docker:prod" in gitlab_release
+    for protected_workflow in (
+        gitlab_package,
+        gitlab_production,
+        gitlab_release,
+    ):
+        assert 'CI_COMMIT_REF_PROTECTED == "true"' in protected_workflow
     assert 'description: "./RELEASE_NOTES.md"' in gitlab_release
+    assert "\\`$PACKAGE_VERSION\\`" in gitlab_release
+    assert "      ```bash" not in gitlab_release
+
+
+def test_gitlab_pipeline_publishes_validated_private_python_packages() -> None:
+    """The modular pipeline should publish immutable packages before release."""
+
+    pipeline = _read(".gitlab-ci.yml")
+    package = _read(".gitlab/python-package.yml")
+
+    for stage in ("test", "package", "docker", "publish", "release"):
+        assert f"  - {stage}" in pipeline
+    assert 'local: ".gitlab/python-package.yml"' in pipeline
+    assert "python -m twine check dist/*" in package
+    assert "SETUPTOOLS_SCM_PRETEND_VERSION" in package
+    assert "--repository-url" in package
+    assert "--skip-existing" not in package
 
 
 def test_ignore_files_cover_local_test_workspaces() -> None:

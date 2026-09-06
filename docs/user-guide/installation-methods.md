@@ -42,7 +42,32 @@ py -m app --help
 
 ---
 
-## Method 2: Install from release assets (`.whl` or `.tar.gz`)
+## Method 2: Private GitLab PyPI registry
+
+Use a deploy token with `read_package_registry` permission:
+
+```bash
+python -m pip install \
+  --index-url "https://<deploy-token-user>:<deploy-token>@gitlab.com/api/v4/projects/<project-id>/packages/pypi/simple" \
+  "path-header-scanner==1.0.0"
+```
+
+For a release-candidate tag such as `v1.0.0-rc.1`, install the normalized
+package version explicitly:
+
+```bash
+python -m pip install \
+  --index-url "https://<deploy-token-user>:<deploy-token>@gitlab.com/api/v4/projects/<project-id>/packages/pypi/simple" \
+  "path-header-scanner==1.0.0rc1"
+```
+
+Do not commit tokens. Disable GitLab package forwarding when package resolution
+must remain strictly private, and avoid `--extra-index-url` for private package
+names.
+
+---
+
+## Method 3: Install from release assets (`.whl` or `.tar.gz`)
 
 From GitHub Releases (example page):
 
@@ -67,7 +92,7 @@ pip install ./path_header_scanner-<version>.tar.gz
 
 ---
 
-## Method 3: Docker image
+## Method 4: Docker image
 
 Example pull command format:
 
@@ -83,7 +108,7 @@ docker run -it --rm -w /workspace -v "${PWD}:/workspace" ghcr.io/devalltect00/pa
 
 ---
 
-## Method 4: Makefile helpers (if available in your environment)
+## Method 5: Makefile helpers (if available in your environment)
 
 Prerequisite: `make` installed.
 

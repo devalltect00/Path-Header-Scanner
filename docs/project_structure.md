@@ -54,6 +54,7 @@ Common directories include:
 │   ├── ci.yml
 │   ├── docker-dev.yml
 │   ├── docker-prod.yml
+│   ├── python-package.yml
 │   └── release.yml
 ├── .ruff_cache/ ... (collapsed)
 ├── app
@@ -284,15 +285,18 @@ Common directories include:
 │           └── variable.mk
 ├── scripts
 │   ├── ci
+│   │   ├── __init__.py
+│   │   └── package_version.py
 │   ├── docker
 │   │   ├── docker-remove-images.ps1
 │   │   └── docker-remove-images.sh
-│   └── docs
-│       ├── docs
-│       │   └── render_mermaid_examples.md
-│       ├── venv/ ... (collapsed)
-│       ├── check_docs_links.py
-│       └── render_mermaid.py
+│   ├── docs
+│   │   ├── docs
+│   │   │   └── render_mermaid_examples.md
+│   │   ├── venv/ ... (collapsed)
+│   │   ├── check_docs_links.py
+│   │   └── render_mermaid.py
+│   └── __init__.py
 ├── site/ ... (collapsed)
 ├── tests
 │   ├── cli
