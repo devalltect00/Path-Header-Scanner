@@ -1,6 +1,6 @@
 # TODO
 
-> Current status: see the [2026-09-02 checkpoint update](#checkpoint-3-2026-09-02).
+> Current status: see the [2026-09-06 checkpoint update](#checkpoint-4-2026-09-06).
 > Older checkboxes, test counts, plans, and decisions are preserved as recorded;
 > they are historical context, not proof that every current release gate passed.
 
@@ -191,3 +191,38 @@ remaining scanner and multi-target ideas are retained.
 - [GitLab package pipeline](../.gitlab/python-package.yml) defines the validation/publication boundary.
 - Earlier test/coverage figures and release-checklist statuses remain attached to their original milestones.
 - No existing history, ideas, alternatives, cancelled work, backup snapshots, or earlier checkpoint messages were removed.
+
+---
+
+<a id="checkpoint-4-2026-09-06"></a>
+
+## 2026-09-06 status update — untagged checkpoint 4
+
+Version scope: **v1.0.0-rc.1**.
+The [checkpoint commit message](../.config/custy/templates/commit-message-v1.0.0-development-checkpoint-4.txt)
+has **no associated tag or tag message**. It becomes part of the cumulative
+RC.1 and stable release history.
+
+### ✅ GitHub release-note rendering
+
+- [x] Replace fragile shell-interpreted Markdown output with explicit `printf` generation so backticks remain literal release content.
+- [x] Preserve the complete reviewed annotated tag message as the main GitHub Release description.
+- [x] Populate version, release type, repository, commit, and workflow metadata instead of leaving empty placeholders.
+- [x] Present concise literal Docker pull and Path Header Scanner CLI verification commands instead of transient image-download or runner output.
+- [x] Preserve exact prerelease image tags and stable-only `latest` behavior.
+- [x] Add regression coverage for release-note construction and keep the GitLab release workflow unchanged.
+
+### ✅ Validation recorded
+
+- [x] Complete Path Header Scanner test suite: 126 passed with 84% overall coverage.
+- [x] Targeted release-workflow regression checks passed.
+- [x] Pre-commit validation passed for the checkpoint and cumulative release-message templates.
+- [x] Diff whitespace and mirrored-template consistency checks passed.
+- [x] Record the maintainer's confirmation that the published GitHub RC page renders the annotated notes, metadata, and Docker guidance cleanly. This is historical reported validation, not a new provider operation for this checkpoint.
+
+### Notes and evidence
+
+- [GitHub release workflow](../.github/workflows/release.yml) contains the corrected release-note generation.
+- [Checkpoint 4 commit message](../.config/custy/templates/commit-message-v1.0.0-development-checkpoint-4.txt) records the internal implementation details.
+- The cumulative RC.1 and v1.0.0 commit and tag messages include checkpoint 4; this checkpoint itself remains untagged.
+- No existing history, plans, ideas, cancelled work, or earlier checkpoint evidence was removed.
