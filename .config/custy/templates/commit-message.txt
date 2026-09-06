@@ -1,52 +1,55 @@
-chore(repository): checkpoint metadata synchronization tooling
+fix(release): checkpoint safe GitHub release-note rendering
 
-Record the optional repository-maintenance helper for Path Header Scanner.
-This is an untagged development checkpoint after the private GitLab Python
-package delivery checkpoint, not a new release or application command.
+Correct Path Header Scanner's GitHub release-note generation so reviewed
+annotated tag messages, release metadata, and Docker usage render as
+documentation instead of being interpreted by the workflow shell.
 
-### 🧰 Repository metadata maintenance
+This is an untagged development checkpoint after the repository-metadata
+maintenance checkpoint. It records the correction validated against the
+published RC workflow without changing the scanner CLI, GitLab publication
+behavior, package version, or release tag.
 
-- Add `scripts/repository/src/sync_metadata.py` as a source-checkout helper,
-  separate from the installed CLI, release pipelines, and package publication.
-- Read the shared repository description from `[project].description` and
-  provider-specific topics from `[tool.devalltect.github].topics` and
-  `[tool.devalltect.gitlab].topics` in the root `pyproject.toml`.
-- Resolve one GitHub and one GitLab repository from ordered Git remote
-  candidates; use the first eligible fetch URL rather than broadcasting to
-  every remote or deriving repository targets from package metadata.
-- Use authenticated `gh` and `glab` only for an explicitly requested live run.
-  Keep `--dry-run` limited to local metadata inspection and read-only Git
-  discovery, without provider API requests.
-- Document that topic synchronization replaces existing lists, that empty or
-  missing lists clear topics, and that a live run has no confirmation prompt
-  or cross-provider rollback.
+### 📝 Release-note generation
 
-### 📚 Documentation and tracking
+- Replace the unquoted Markdown heredoc with explicit `printf` output so inline
+  and fenced backticks remain literal release content.
+- Preserve the complete annotated tag message as the primary GitHub Release
+  description.
+- Populate the version, release type, repository, commit, and workflow fields
+  without command substitution or missing values.
 
-- Refresh README installation guidance for the private GitLab PyPI registry,
-  with explicit package versions and credentials kept out of examples.
-- Align README commands, configuration paths, and runtime requirements with
-  the active project; distinguish the maintainer helper from product features.
-- Add dated checkpoint notes to the active TODO histories while retaining
-  earlier tasks, ideas, alternatives, cancelled work, and historical results.
-- Carry a short maintainer-tooling note into the pending release commit
-  messages; leave user-facing tag messages unchanged for this helper-only work.
+### 🐳 Docker guidance
 
-### 🧪 Review boundary and follow-up
+- Publish concise commands for pulling the exact release image and verifying
+  the `path-header-scanner` CLI with `--help`.
+- Keep prerelease images on their exact tag and explain that only stable
+  releases update `latest`.
+- Prevent Docker pulls, layer progress, and runner output from executing or
+  appearing while release notes are assembled.
 
-- This checkpoint records source and documentation review, not a live metadata
-  synchronization or a fresh full-suite/application-release validation.
-- Track correction of the helper's stale usage path and GitHub topic-limit
-  mismatch, plus isolated mocked tests, as pending follow-up work.
-- Require a separate target review and explicit authorization before live
-  GitHub or GitLab metadata changes.
+### 🧪 Regression protection and validation
 
-Tag: none — intentionally untagged checkpoint
-Previous checkpoint: commit-message-v1.0.0-development-checkpoint-2.txt
-Next release: v1.0.0-rc.1
-No tag-message file is associated with this checkpoint.
+- Extend the developer-workflow regression test to reject the unsafe heredoc
+  and require literal Docker examples and populated metadata variables.
+- Confirm the corrected RC release body renders cleanly on GitHub.
+- Pass the focused workflow tests and the complete suite: 126 tests with 84%
+  overall coverage.
+- Pass targeted Ruff, Black, whitespace, end-of-file, and diff checks.
+
+### 📌 Scope
+
+- Keep GitLab's already escaped release-note generation unchanged.
+- Keep this checkpoint untagged; it becomes part of the cumulative
+  `v1.0.0-rc.1` and stable `v1.0.0` release messages.
+- Do not change scanner behavior, configuration, package metadata, Docker
+  publication policy, or external repository state.
+
+Refs: v1.0.0-rc.1 preparation
+Previous checkpoint: commit-message-v1.0.0-development-checkpoint-3.txt
+Tag: none
 
 🔖 **Tags**:
-- Type: `#maintenance`, `#documentation`
-- Scope: `#repository-metadata`, `#github`, `#gitlab`, `#dry-run`
-- Workflow: `#checkpoint`, `#untagged`, `#maintainer-tooling`
+
+- Type: `#fix`, `#release`, `#ci`
+- Scope: `#github-actions`, `#release-notes`, `#docker`, `#markdown`
+- Safety: `#annotated-tags`, `#regression-test`, `#stable-latest`

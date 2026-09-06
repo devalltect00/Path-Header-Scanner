@@ -34,8 +34,7 @@ Common directories include:
 │   ├── custy
 │   │   ├── templates
 │   │   │   ├── backups
-│   │   │   │   ├── commit
-│   │   │   │   └── tag
+│   │   │   │   └── commit
 │   │   │   ├── changelog
 │   │   │   │   └── changelog.j2
 │   │   │   ├── examples
@@ -343,7 +342,6 @@ Common directories include:
 │   ├── test_developer_workflows.py
 │   └── test_dry_run.py
 ├── venv/ ... (collapsed)
-├── .coverage
 ├── .dockerignore
 ├── .gitignore
 ├── .gitlab-ci.yml

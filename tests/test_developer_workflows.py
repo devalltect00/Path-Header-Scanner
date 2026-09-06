@@ -105,6 +105,18 @@ def test_release_workflows_enforce_reviewed_tag_publication() -> None:
     assert "\\`$PACKAGE_VERSION\\`" in gitlab_release
     assert "      ```bash" not in gitlab_release
 
+    # Markdown backticks inside an unquoted heredoc are Bash command
+    # substitutions. Release-note generation must keep Docker examples literal.
+    assert "cat <<EOF >> RELEASE_NOTES.md" not in release
+    assert "printf '```bash\\n'" in release
+    assert "docker pull ghcr.io/%s:%s\\n" in release
+    assert "docker run --rm ghcr.io/%s:%s --help\\n" in release
+    assert '"$IMAGE_NAME" "$IMAGE_TAG"' in release
+    assert "- Version: `%s`\\n" in release
+    assert "- Release Type: `%s`\\n" in release
+    assert '"$GITHUB_REPOSITORY"' in release
+    assert '"$GITHUB_WORKFLOW"' in release
+
 
 def test_gitlab_pipeline_publishes_validated_private_python_packages() -> None:
     """The modular pipeline should publish immutable packages before release."""
