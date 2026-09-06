@@ -1,3 +1,5 @@
+# scripts/docs/check_docs_links.py
+
 """
 scripts/docs/check_docs_links.py
 

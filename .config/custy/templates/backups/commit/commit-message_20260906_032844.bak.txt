@@ -1,0 +1,52 @@
+chore(repository): checkpoint metadata synchronization tooling
+
+Record the optional repository-maintenance helper for Path Header Scanner.
+This is an untagged development checkpoint after the private GitLab Python
+package delivery checkpoint, not a new release or application command.
+
+### 🧰 Repository metadata maintenance
+
+- Add `scripts/repository/src/sync_metadata.py` as a source-checkout helper,
+  separate from the installed CLI, release pipelines, and package publication.
+- Read the shared repository description from `[project].description` and
+  provider-specific topics from `[tool.devalltect.github].topics` and
+  `[tool.devalltect.gitlab].topics` in the root `pyproject.toml`.
+- Resolve one GitHub and one GitLab repository from ordered Git remote
+  candidates; use the first eligible fetch URL rather than broadcasting to
+  every remote or deriving repository targets from package metadata.
+- Use authenticated `gh` and `glab` only for an explicitly requested live run.
+  Keep `--dry-run` limited to local metadata inspection and read-only Git
+  discovery, without provider API requests.
+- Document that topic synchronization replaces existing lists, that empty or
+  missing lists clear topics, and that a live run has no confirmation prompt
+  or cross-provider rollback.
+
+### 📚 Documentation and tracking
+
+- Refresh README installation guidance for the private GitLab PyPI registry,
+  with explicit package versions and credentials kept out of examples.
+- Align README commands, configuration paths, and runtime requirements with
+  the active project; distinguish the maintainer helper from product features.
+- Add dated checkpoint notes to the active TODO histories while retaining
+  earlier tasks, ideas, alternatives, cancelled work, and historical results.
+- Carry a short maintainer-tooling note into the pending release commit
+  messages; leave user-facing tag messages unchanged for this helper-only work.
+
+### 🧪 Review boundary and follow-up
+
+- This checkpoint records source and documentation review, not a live metadata
+  synchronization or a fresh full-suite/application-release validation.
+- Track correction of the helper's stale usage path and GitHub topic-limit
+  mismatch, plus isolated mocked tests, as pending follow-up work.
+- Require a separate target review and explicit authorization before live
+  GitHub or GitLab metadata changes.
+
+Tag: none — intentionally untagged checkpoint
+Previous checkpoint: commit-message-v1.0.0-development-checkpoint-2.txt
+Next release: v1.0.0-rc.1
+No tag-message file is associated with this checkpoint.
+
+🔖 **Tags**:
+- Type: `#maintenance`, `#documentation`
+- Scope: `#repository-metadata`, `#github`, `#gitlab`, `#dry-run`
+- Workflow: `#checkpoint`, `#untagged`, `#maintainer-tooling`

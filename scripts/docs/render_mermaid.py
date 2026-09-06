@@ -1,3 +1,5 @@
+# scripts/docs/render_mermaid.py
+
 """
 scripts/docs/render_mermaid.py
 

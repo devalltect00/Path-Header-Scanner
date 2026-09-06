@@ -296,6 +296,9 @@ Common directories include:
 │   │   ├── venv/ ... (collapsed)
 │   │   ├── check_docs_links.py
 │   │   └── render_mermaid.py
+│   ├── repository
+│   │   └── src
+│   │       └── sync_metadata.py
 │   └── __init__.py
 ├── site/ ... (collapsed)
 ├── tests

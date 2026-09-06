@@ -11,46 +11,27 @@ Unreleased
 
 **Summary**
 
-Add the private GitLab PyPI distribution path for Path Header Scanner and
-harden the release boundary before the v1.0.0-rc.1 promotion commit.
+Record the optional repository-maintenance helper for Path Header Scanner.
+This is an untagged development checkpoint after the private GitLab Python
+package delivery checkpoint, not a new release or application command.
 
-### Private Package Delivery
+### 📚 Documentation
 
-#### Distribution
+#### Repository
 
-- Publish the `path-header-scanner` wheel and source distribution to the
-- Keep `path-header-scanner` as both the Python distribution and installed
-- Convert reviewed SemVer release tags to canonical PEP 440 package versions,
-- Use GitLab's short-lived `CI_JOB_TOKEN` for publication and document deploy
-- Keep published versions immutable: duplicate uploads fail instead of
+- Refresh README installation guidance for the private GitLab PyPI registry,
+- Align README commands, configuration paths, and runtime requirements with
+- Add dated checkpoint notes to the active TODO histories while retaining
+- Carry a short maintainer-tooling note into the pending release commit
 
-### Validation And Release Safeguards
+### Review Boundary And Follow Up
 
-#### Distribution
+#### Repository
 
-- Validate every pushed tag without granting every tag publication authority.
-- Let unprotected tags complete package validation successfully while skipping
-- Require a protected, non-empty annotated release tag before any external
-- Reject unsupported or ambiguous versions, lightweight tags, empty tag
-- Build exactly one wheel and one source distribution, run `twine check`,
-
-### Pipeline And Documentation Alignment
-
-#### Distribution
-
-- Order the GitLab release path as test → package validation → production
-- Keep retained package artifacts available for inspecting validation-only tag
-- Update CI/CD guidance with the protected-tag contract, deploy-token install
-- Add structural regression coverage for validation-only unprotected tags and
-
-### Validation
-
-#### Distribution
-
-- Passed the full Path Header Scanner suite: 126 tests.
-- Passed focused GitLab workflow structural checks: 7 tests.
-- Passed Ruff, Black, GitLab YAML parsing, and repository diff checks.
+- This checkpoint records source and documentation review, not a live metadata
+- Track correction of the helper's stale usage path and GitHub topic-limit
+- Require a separate target review and explicit authorization before live
 
 **Tags**
 
-distribution
+docs • repository • repository-metadata • github • gitlab • dry-run • checkpoint • untagged • maintainer-tooling

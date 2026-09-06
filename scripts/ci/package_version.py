@@ -1,3 +1,5 @@
+# scripts/ci/package_version.py
+
 """Validate release tags and Python distribution metadata for GitLab CI.
 
 The release pipeline accepts a deliberately small tag vocabulary, converts
