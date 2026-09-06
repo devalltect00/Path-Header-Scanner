@@ -11,40 +11,42 @@ Unreleased
 
 **Summary**
 
-Correct Path Header Scanner's GitHub release-note generation so reviewed
-annotated tag messages, release metadata, and Docker usage render as
-documentation instead of being interpreted by the workflow shell.
+Promote the combined implementation from four untagged development checkpoints
+to the first Path Header Scanner 1.0 release candidate. This is the promotion
+and validation boundary, not another implementation checkpoint.
 
-This is an untagged development checkpoint after the repository-metadata
-maintenance checkpoint. It records the correction validated against the
-published RC workflow without changing the scanner CLI, GitLab publication
-behavior, package version, or release tag.
+### Checkpoint Lineage
+
+#### Rc
+
+- Checkpoint 1 owns the complete application foundation, general GitHub and
+- Checkpoint 2 owns private GitLab Python distribution, canonical PEP 440
+- Checkpoint 3 owns the optional source-checkout repository-metadata helper and
+- Checkpoint 4 owns safe GitHub release-note rendering, populated release
 
 ### 🚀 Releases
 
-- Replace the unquoted Markdown heredoc with explicit `printf` output so inline
-- Preserve the complete annotated tag message as the primary GitHub Release
-- Populate the version, release type, repository, commit, and workflow fields
+#### Rc
 
-### Docker Guidance
+- Establish the first supported release line; there is no earlier published
+- Keep `path-header-scanner init` and `path-header-scanner scan <target>` as
+- Preserve preview-first scanning, explicit apply control, language-aware
+- Keep `--dry-run` authoritative over CLI or configured apply mode and keep
+- Preserve Python 3.11+ compatibility and Python 3.14 as the standard
+- Carry forward active-repository registry naming, root multi-stage builds,
+- Use `path-header-scanner==1.0.0rc1` as the canonical RC Python package version while
+- Preserve `CI_JOB_TOKEN` publication, authorized deploy-token installation,
 
-- Publish concise commands for pulling the exact release image and verifying
-- Keep prerelease images on their exact tag and explain that only stable
-- Prevent Docker pulls, layer progress, and runner output from executing or
+### Recorded Validation And Final Rc Gates
 
-### Regression Protection And Validation
+#### Rc
 
-- Extend the developer-workflow regression test to reject the unsafe heredoc
-- Confirm the corrected RC release body renders cleanly on GitHub.
-- Pass the focused workflow tests and the complete suite: 126 tests with 84%
-- Pass targeted Ruff, Black, whitespace, end-of-file, and diff checks.
-
-### Scope
-
-- Keep GitLab's already escaped release-note generation unchanged.
-- Keep this checkpoint untagged; it becomes part of the cumulative
-- Do not change scanner behavior, configuration, package metadata, Docker
+- Treat the validation recorded in checkpoints 1 and 2 as historical evidence,
+- Re-run the approved test, lint, formatting, pre-commit, packaging,
+- Confirm the reviewed target paths, output or mutation boundaries, package
+- Review the maintainer helper's pending follow-ups separately; this promotion
+- Document and validate release-blocking fixes discovered during candidate
 
 **Tags**
 
-release • github-actions • release-notes • docker • markdown
+release • rc

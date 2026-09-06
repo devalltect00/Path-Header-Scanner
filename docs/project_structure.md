@@ -215,10 +215,7 @@ Common directories include:
 │   ├── infrastructure.md
 │   ├── installation.md
 │   ├── project_structure.md
-│   ├── TODO_tracking_history copy before.md
 │   ├── TODO_tracking_history.md
-│   ├── TODO_tracking_history_v1.0.0-rc.1.md
-│   ├── TODO_tracking_history_v1.0.0.md
 │   └── usage.md
 ├── logs/ ... (collapsed)
 ├── make

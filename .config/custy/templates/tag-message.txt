@@ -1,11 +1,155 @@
-✅ Final Release path-header-scanner v0.0.1
+🚧 Path Header Scanner v1.0.0-rc.1 — First Production Release Candidate
 
-**path-header-scanner v0.0.1** is now stable and production-ready. All feature and fixes from pre-releases (alpha, beta, rc) are included.
+Path Header Scanner v1.0.0-rc.1 is the first formal release candidate for a
+configuration-driven CLI that previews, validates, inserts, and updates
+repository-relative path headers across supported source and documentation
+files.
 
-### ✨ Highlights
+There is no previous production release to upgrade from. This candidate defines
+the initial supported CLI, configuration, safety model, language coverage, and
+automation foundation that will become v1.0.0 after release-candidate validation.
 
-- *(Nothing yet)*
+### 🌟 Highlights
 
----
+- Preview-first scanning: files remain unchanged unless `--apply` is selected.
+- Recursive discovery and validation of missing, valid, and stale path headers.
+- Language-aware support for Python, JavaScript and TypeScript, Shell, PHP, HTML, and Markdown.
+- Explicit target and working-directory selection for predictable repository-relative headers.
+- Configurable ignore rules for Git metadata, environments, caches, dependencies, and build output.
+- `path-header-scanner init` for generating the namespaced project configuration.
+- `path-header-scanner scan <target>` for previewing or applying reviewed corrections.
+- Rich command help, banners, progress, summaries, and failure reporting.
+- Concise, actionable command errors with reliable nonzero exits and debug-only implementation tracebacks.
+- Console and rotating-file logging for troubleshooting.
+- Local, Docker, Docker Compose, and modular Make workflows.
+- Automated tests, MkDocs documentation, GitHub Actions, and GitLab CI support.
+- Hardened delivery pipelines that use the active repository's registry namespace, require non-empty annotated release tags, preserve safely rendered complete tag-message release notes with populated metadata and literal Docker commands, keep RC images on their exact tag, and reserve `latest` for stable releases.
+- Private GitLab PyPI delivery for `path-header-scanner`, with the RC tag
+  published as canonical package version `1.0.0rc1` only after the protected
+  release pipeline passes.
 
-✅ This version is **stable** and **suitable** for production use.
+### 📦 Install the private RC package
+
+Authorized users can install the candidate from the private GitLab package
+registry. Configure pip authentication with a deploy token limited to
+`read_package_registry`, then use the token-free project index URL:
+
+```bash
+python -m pip install \
+  --index-url "https://gitlab.com/api/v4/projects/<project-id>/packages/pypi/simple" \
+  "path-header-scanner==1.0.0rc1"
+```
+
+Supply the deploy-token username and token through an approved protected pip
+credential mechanism or its interactive authentication flow. Never place tokens
+in committed configuration or shared command history. Unprotected tags validate
+the same artifacts but cannot publish them.
+
+### 🛡️ Safety model
+
+Path Header Scanner is intentionally conservative:
+
+- A normal scan is a preview and does not change target files.
+- `--apply` is required before eligible files are updated.
+- `--dry-run` prevents mutations even if `--apply` or configured apply mode is present.
+- Initialization dry-run does not create configuration directories or files and does not prompt for overwrite.
+- Read-only discovery and validation still run during dry-run so the preview remains useful.
+- Diagnostic logs may be written to the configured log destination, but target-project files remain unchanged.
+
+### 🧭 Core workflows
+
+Preview a target:
+
+```bash
+path-header-scanner scan app
+```
+
+Apply reviewed corrections:
+
+```bash
+path-header-scanner scan app --apply
+```
+
+Force an explicit simulation, including when apply mode is configured:
+
+```bash
+path-header-scanner scan app --apply --dry-run
+```
+
+Preview project initialization:
+
+```bash
+path-header-scanner init --dry-run
+```
+
+### ⚙️ Configuration
+
+Project settings live in:
+
+```text
+.config/path_header_scanner/config.toml
+```
+
+Configuration can define scan defaults, ignored content, logging, banner
+behavior, apply mode, and dry-run mode. Explicit CLI options take precedence for
+the current invocation.
+
+### 🧩 Language behavior
+
+Each supported language uses syntax appropriate to that file type. The scanner
+preserves relevant leading content, including shebangs and language-specific
+special lines, while inserting or replacing only the managed path header.
+
+Markdown path headers use HTML comments intentionally so generated documentation
+remains readable without displaying internal header metadata.
+
+### 🧰 For contributors and integrators
+
+- CLI parsing and presentation are separated from scan and update behavior.
+- Language strategies provide focused extension points for additional file types.
+- Scanner, processor, and updater responsibilities can be tested independently.
+- Initialization planning is separated from persistence to enforce dry-run safety.
+- Modular Make, Docker, Compose, CI, lint, format, test, package, and documentation workflows support repeatable development.
+
+### 🧪 Recommended RC validation
+
+Please validate the candidate on a disposable or version-controlled test project:
+
+1. Install v1.0.0-rc.1 in an isolated Python environment.
+2. Run `path-header-scanner --help` and command-specific help.
+3. Preview initialization with `path-header-scanner init --dry-run`.
+4. Initialize and review `.config/path_header_scanner/config.toml`.
+5. Preview representative source and documentation targets.
+6. Verify `--apply --dry-run` leaves every target file unchanged.
+7. Apply a reviewed scan and inspect the resulting path headers and summary.
+8. Report unsupported syntax, incorrect relative paths, unsafe writes, or confusing output before v1.0.0 is promoted.
+
+### 🚧 Release-candidate status
+
+This release candidate brings together four untagged development checkpoints.
+The product and general delivery foundation belongs to checkpoint 1; private
+GitLab package delivery belongs to checkpoint 2; source-checkout maintenance
+belongs to checkpoint 3; and safe GitHub Release rendering belongs to checkpoint
+4. RC.1 promotes their reviewed, cumulative result rather than introducing a
+separate implementation checkpoint.
+
+Recorded development validation is not final release sign-off. Complete the
+RC checks against the exact candidate commit before publishing its tag, and
+validate the workflows relevant to your project before production use.
+
+- Version: `v1.0.0-rc.1`
+- Previous version: none — first formal release
+- Strategy: Semantic Versioning
+- Package compatibility: Python 3.11+
+- Standard development/container runtime: Python 3.14
+- Stability: Release candidate; validate before production automation
+- Stable target: `v1.0.0`
+
+The stable release may include final cleanup, documentation corrections, and
+fixes discovered during RC validation, without changing the documented safety
+model unexpectedly.
+
+Thank you for validating the first Path Header Scanner production release line.
+
+_Release candidate: v1.0.0-rc.1_
+_Author: Devalltect / Rizky Fernandes_

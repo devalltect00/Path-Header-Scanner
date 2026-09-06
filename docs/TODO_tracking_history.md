@@ -1,5 +1,10 @@
 # TODO
 
+> Cumulative snapshot for **v1.0.0-rc.1**. Earlier tasks, unfinished work,
+> considerations, ideas, cancelled items, and notes are intentionally retained.
+
+# Path Header Scanner TODO Tracking History — v1.0.0-rc.1
+
 > Current status: see the [2026-09-06 checkpoint update](#checkpoint-4-2026-09-06).
 > Older checkboxes, test counts, plans, and decisions are preserved as recorded;
 > they are historical context, not proof that every current release gate passed.
@@ -79,6 +84,119 @@ Personal planning and roadmap for **Path Header Scanner**.
 
 ---
 
+## Since v1.0.0-rc.1
+
+### Version context
+
+| Field                        | Value                              |
+| ---------------------------- | ---------------------------------- |
+| Version                      | `v1.0.0-rc.1`                      |
+| Previous version             | None — first formal release        |
+| Release type                 | First production release candidate |
+| Version strategy             | Semantic Versioning                |
+| Package compatibility        | Python 3.11+                       |
+| Standard development/runtime | Python 3.14                        |
+
+### Completed release-candidate scope
+
+#### Scanning and header management
+
+- [x] Discover supported source and documentation files recursively.
+- [x] Validate missing, current, and stale repository-relative path headers.
+- [x] Insert or replace headers through language-aware strategies.
+- [x] Support Python, JavaScript, TypeScript, Shell, PHP, HTML, and Markdown syntax.
+- [x] Preserve relevant leading content, special lines, and trailing-newline behavior.
+- [x] Apply configurable ignore rules for repositories, environments, caches, dependencies, build outputs, and user paths.
+- [x] Report valid, inserted, updated, unsupported, skipped, and failed files clearly.
+
+#### CLI, configuration, and safety
+
+- [x] Add `path-header-scanner init` and `path-header-scanner scan <target>`.
+- [x] Keep scan preview non-mutating by default and require `--apply` for file updates.
+- [x] Add target, working-directory, logging, debug, banner, version, help, and completion controls.
+- [x] Add `.config/path_header_scanner/config.toml` with CLI → configuration → default resolution.
+- [x] Add initialization builders, models, registries, presenters, and scaffold generation.
+- [x] Add Rich banners, help, panels, progress, summaries, and actionable command errors.
+- [x] Add centralized CLI exception handling with reliable nonzero failure exits and debug-only tracebacks.
+
+#### Dry-run guarantees
+
+- [x] Add dry-run to initialization and scanning.
+- [x] Make scan dry-run override both CLI `--apply` and configured `apply = true`.
+- [x] Prevent dry-run initialization from creating directories, writing files, overwriting content, or prompting.
+- [x] Keep read-only discovery, validation, and rendering available during simulation.
+- [x] Add terminal messages that distinguish preview, dry-run, and live apply behavior.
+
+#### Architecture and developer workflow
+
+- [x] Separate CLI parsing and presentation from scan discovery, processing, validation, and updates.
+- [x] Isolate language-specific behavior behind focused strategies.
+- [x] Add shared results, domain exceptions, path and logging utilities, UI components, and themes.
+- [x] Separate initialization planning from persistence so dry-run stops before mutation.
+- [x] Add `AGENTS.md` and engineering guidance for scan safety, configuration, testing, and releases.
+- [x] Add modular Make, Docker, Compose, CI/CD, packaging, Ruff, Black, Pytest, MkDocs, and pre-commit workflows.
+
+#### Tests and documentation
+
+- [x] Add CLI, configuration, initialization, scanner, processor, updater, language, service, UI, and utility tests.
+- [x] Add regressions for preview/apply behavior, configuration precedence, and dry-run override behavior.
+- [x] Add pre-commit configuration validation and command-help/developer-workflow checks.
+- [x] Record the release baseline as 123 passing tests with 84% measured coverage on Python 3.14.
+- [x] Document installation, configuration, usage, safety, languages, architecture, testing, Docker, Compose, Make, and troubleshooting.
+- [x] Add dedicated dry-run guidance and project-structure/diagram documentation.
+- [x] Prepare separate internal commit and public release messages for RC.1 and stable 1.0.0.
+
+### RC validation checklist
+
+#### CI/CD release safeguards completed for RC.1
+
+- [x] Validate Python 3.11 and 3.14 in hosted CI.
+- [x] Derive GHCR destinations from the active repository and use GitLab's project registry destination.
+- [x] Build from the root multi-stage Dockerfile with explicit development or production targets.
+- [x] Require a non-empty annotated SemVer tag before production image or provider-release publication.
+- [x] Publish exact prerelease tags without updating `latest`; reserve `latest` for stable releases.
+- [x] Preserve full annotated tag messages as provider release notes and attach package artifacts.
+- [x] Pin Ruff and Black consistently and add workflow-contract regression tests.
+- [x] Keep the comprehensive product commit as an untagged checkpoint and reserve the RC.1 tag for CI/CD finalization.
+
+- [ ] Install RC.1 in an isolated environment and validate root and command help.
+- [ ] Preview and perform initialization in a disposable repository.
+- [ ] Scan representative files for every supported language in preview mode.
+- [ ] Verify `--apply --dry-run` leaves every target file unchanged.
+- [ ] Apply reviewed changes and inspect headers, special lines, and summaries.
+- [ ] Validate custom ignores, working-directory resolution, unsupported files, and failure handling.
+- [ ] Validate local, Docker, Compose, Make, package, and documentation workflows.
+- [ ] Commit, tag, publish, and verify `v1.0.0-rc.1` only with explicit release approval.
+
+### Deferred beyond RC.1
+
+- [ ] Complete final cleanup and incorporate release-blocking RC corrections.
+- [ ] Consider multiple target directories while preserving deterministic resolution and mutation safety.
+- [ ] Improve progress visibility further if large-repository validation identifies a real need.
+- [ ] Split UI components further only where it materially improves testing or extension.
+- [ ] Review future pre-commit upgrades intentionally rather than updating them as a release side effect.
+
+### Notes
+
+- This is the first formal release line, so there is no supported earlier
+  production release to migrate from.
+- This snapshot does not claim that a tag, package, image, or release has been
+  published.
+
+---
+
+## Additional status carried from repository TODO files
+
+### CLI option modularization
+
+- [x] Move initialization options into `app/cli/commands/init/options.py`.
+- [x] Define and import `AskOption`, `ForceOption`, and `ModeOption` from the focused options module.
+- [x] Keep command functions focused on orchestration rather than repeating option declarations.
+
+The root `TODO.md` still uses unchecked boxes for this work, but the active
+source contains the requested module and imports. This versioned history records
+the implementation state without modifying the original TODO file.
+
 ### 🧠 Planned
 
 #### 🚀 v1.0.0 release preparation
@@ -131,7 +249,7 @@ Personal planning and roadmap for **Path Header Scanner**.
 
 ## 🧾 Notes
 
-### TODO.md
+### Path Header Scanner TODO Tracking History — v1.0.0-rc.1.md
 
 Keep this file concise, status-driven, and updated during each milestone.
 

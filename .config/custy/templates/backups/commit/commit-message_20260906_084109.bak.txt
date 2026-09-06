@@ -1,0 +1,68 @@
+release(rc): promote Path Header Scanner v1.0.0-rc.1
+
+Promote the combined implementation from four untagged development checkpoints
+to the first Path Header Scanner 1.0 release candidate. This is the promotion
+and validation boundary, not another implementation checkpoint.
+
+### 🧭 Checkpoint lineage
+
+- Checkpoint 1 owns the complete application foundation, general GitHub and
+  GitLab CI/CD corrections, runtime compatibility, Docker build-version
+  resolution, ignore rules, quality tooling, regression tests, and documentation.
+- Checkpoint 2 owns private GitLab Python distribution, canonical PEP 440
+  package metadata, protected-tag publication, validation-only unprotected
+  tags, and immutable package safeguards.
+- Checkpoint 3 owns the optional source-checkout repository-metadata helper and
+  related README/TODO maintenance. It remains outside the installed CLI and
+  automated release workflow; its recorded follow-ups remain subject to review.
+- Checkpoint 4 owns safe GitHub release-note rendering, populated release
+  metadata, literal Docker examples, and regression protection.
+
+### ✅ Release-candidate contract
+
+- Establish the first supported release line; there is no earlier published
+  stable version to migrate from.
+- Keep `path-header-scanner init` and `path-header-scanner scan <target>` as
+  the supported public commands.
+- Preserve preview-first scanning, explicit apply control, language-aware
+  headers, deterministic targets, ignores, and concise command errors.
+- Keep `--dry-run` authoritative over CLI or configured apply mode and keep
+  initialization dry-run non-writing and non-interactive.
+- Preserve Python 3.11+ compatibility and Python 3.14 as the standard
+  development and container runtime.
+- Carry forward active-repository registry naming, root multi-stage builds,
+  non-empty annotated release-tag checks, package/tag version agreement,
+  complete provider release notes, exact prerelease images, and stable-only
+  `latest`.
+- Use `path-header-scanner==1.0.0rc1` as the canonical RC Python package version while
+  retaining `v1.0.0-rc.1` as the SemVer Git tag.
+- Preserve `CI_JOB_TOKEN` publication, authorized deploy-token installation,
+  and the package validation → production image → private package → release
+  ordering established by checkpoint 2.
+
+### 🧪 Recorded validation and final RC gates
+
+- Treat the validation recorded in checkpoints 1 and 2 as historical evidence,
+  not a substitute for checks against the exact RC commit.
+- Re-run the approved test, lint, formatting, pre-commit, packaging,
+  documentation, CLI-help, dry-run, Make, Docker, Compose, and workflow checks.
+- Confirm the reviewed target paths, output or mutation boundaries, package
+  metadata, image destinations, annotated tag message, and release links.
+- Review the maintainer helper's pending follow-ups separately; this promotion
+  message does not assert that live metadata synchronization was validated.
+- Document and validate release-blocking fixes discovered during candidate
+  review before promoting the stable release.
+
+Tag: v1.0.0-rc.1
+Previous release: none — first formal release
+Checkpoints:
+- commit-message-v1.0.0-development-checkpoint.txt
+- commit-message-v1.0.0-development-checkpoint-2.txt
+- commit-message-v1.0.0-development-checkpoint-3.txt
+- commit-message-v1.0.0-development-checkpoint-4.txt
+
+🔖 **Tags**:
+- Type: `#release`, `#validation`
+- Delivery: `#release-candidate`, `#semver`, `#github`, `#gitlab`
+- Quality: `#tests`, `#dry-run`, `#packaging`, `#compatibility`
+- Safety: `#annotated-tags`, `#protected-tags`, `#stable-latest`
