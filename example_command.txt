@@ -1,0 +1,79 @@
+
+docker compose run --rm path-header-scanner scan app_test --apply
+
+
+=======================
+# build
+docker build -t path-header-scanner .
+
+# run
+## On shell
+docker run -it --rm -v "${PWD}:/workspace" path-header-scanner scan /workspace/app --debug
+docker run -it --rm -v "${PWD}:/workspace" path-header-scanner scan app --debug
+docker run -it --rm -w /workspace -v "${PWD}:/workspace" path-header-scanner scan app --debug
+
+## On cmd
+docker run -it --rm -v "%cd%:/workspace" path-header-scanner scan app --debug
+docker run -it --rm -w /workspace -v "%cd%:/workspace" path-header-scanner scan app --debug
+
+# If want to run on another project
+## On shell
+docker run -it --rm -v "${PWD}:/workspace" path-header-scanner scan app --debug
+## On cmd
+docker run -it --rm -v "%cd%:/workspace" path-header-scanner scan app --debug
+
+============
+
+Workflow
+
+(optional-docker-cleanup)
+-> make docker-remove-images
+(optional-docker-build)
+-> make compose-build
+make compose-up-detached
+
+
+docker run -it --rm -v "%cd%:/workspace" -w /workspace path-header-scanner-prod:latest scan app --debug
+
+docker run -it --rm --entrypoint "" -v "%cd%:/workspace" -w /workspace path-header-scanner-dev:latest python -m pytest -v
+
+------------
+
+docker run --rm -it -v "%cd%:/workspace" -w /workspace ghcr.io/devalltect00/path_header_scanner:latest scan app
+
+
+------------
+
+docker run --rm --entrypoint python path-header-scanner-prod:latest -c "from importlib.resources import files; print(files('app.templates').joinpath('config.toml').read_text())"
+
+docker run --rm --entrypoint python path-header-scanner-prod:latest -c "from importlib.resources import files; print(files('app.templates'))"
+
+
+===============
+
+docker run -it --rm -v "%cd%:/workspace" -w /workspace path-header-scanner-prod:latest scan app --apply
+docker run -it --rm -v "%cd%:/workspace" -w /workspace path-header-scanner-prod:latest scan tests --apply
+docker run -it --rm -v "%cd%:/workspace" -w /workspace path-header-scanner-prod:latest scan docs --apply
+
+docker run -it --rm -v "%cd%:/workspace" -w /workspace ghcr.io/devalltect00/Path-Header-Scanner:latest scan app --apply
+docker run -it --rm -v "%cd%:/workspace" -w /workspace ghcr.io/devalltect00/Path-Header-Scanner:latest scan tests --apply
+docker run -it --rm -v "%cd%:/workspace" -w /workspace ghcr.io/devalltect00/Path-Header-Scanner:latest scan docs --apply
+
+
+========================
+
+docker run -it --rm -v "%cd%:/workspace" -w /workspace path-header-scanner-prod:latest
+
+========================
+
+docker run -it --rm -v "%cd%:/workspace" -w /workspace path-header-scanner-prod:latest init --force
+docker run -it --rm -v "%cd%:/workspace" -w /workspace doc-gen-prod:latest init --force
+docker run -it --rm -v "%cd%:/workspace" -w /workspace reflow-prod:latest init
+docker run -it --rm -v "%cd%:/workspace" -w /workspace custy-prod:latest init
+
+docker run -it --rm -v "%cd%:/workspace" -w /workspace path-header-scanner-prod:latest scan app --apply
+docker run -it --rm -v "%cd%:/workspace" -w /workspace path-header-scanner-prod:latest scan tests --apply
+
+docker run -it --rm -v "%cd%:/workspace" -w /workspace doc-gen-prod:latest structure generate
+
+docker run -it --rm -v "%cd%:/workspace" -w /workspace custy-prod:latest changelog generate

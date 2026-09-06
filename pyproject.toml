@@ -1,0 +1,416 @@
+[project]
+
+name = "path-header-scanner"
+
+dynamic = ["version"]
+# version = "1.0.0"
+# With this the version will be auto-generated from git tags using setuptools_scm
+# When run
+# pip install
+# or
+# python -m build
+# it will extract the version from Git tag and use it automatically.
+#
+# To use the auto version inside code:
+# ```python
+# from importlib.metadata import version
+# __version__ = version("currency-conversion-api")
+# ✅ This will always return the version from Git tag if setuptools_scm is used properly.
+
+
+description = "Configuration-driven CLI for previewing, validating, and updating path headers across source code and documentation files."
+
+readme = "README.md"
+
+requires-python = ">=3.11"
+
+license = { text = "MIT" }
+
+authors = [
+    { name = "Rizky Fernandes (devalltect00)", email = "rizkypffdev37@gmail.com"},
+]
+
+maintainers = [
+    { name = "Rizky Fernandes (devalltect00)", email = "rizkypffdev37@gmail.com"},
+]
+
+keywords = [
+    "path-header",
+    "header-scanner",
+    "file-header",
+    "source-path",
+    "code-quality",
+    "code-maintenance",
+    "developer-tools",
+    "documentation",
+    "source-code",
+    "code-organization",
+    "automation",
+    "dry-run",
+    "cli",
+    "cli-tool",
+    "python",
+    "typer",
+    "rich",
+    "docker",
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+
+    "Intended Audience :: Developers",
+
+    "License :: OSI Approved :: MIT License",
+
+    "Operating System :: OS Independent",
+
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+
+    "Environment :: Console",
+
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Utilities",
+]
+
+dependencies = [
+    # CLI Framework
+    "typer>=0.12.0",
+    "click>=8.1.7",
+
+    # Terminal UI
+    "rich>=14.0.0",
+    "pyfiglet>=1.0.4",
+]
+
+[project.optional-dependencies]
+
+dev = [
+    # Test
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+
+    # Formatting
+    "black==26.5.1",
+
+    # Linting
+    "ruff==0.16.5",
+
+    # Packaging
+    "build>=1.2.0",
+    "twine>=5.0.0",
+
+    # Git hooks
+    "pre-commit>=3.7.0",
+
+    # related to `AREPL for python` vscode extensions
+    "ipykernel",
+]
+
+docs = [
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.0",
+]
+
+[project.urls]
+
+Homepage = "https://github.com/devalltect00/Path-Header-Scanner"
+Repository = "https://github.com/devalltect00/Path-Header-Scanner"
+Issues = "https://github.com/devalltect00/Path-Header-Scanner/issues"
+## Documentation = "https://github.com/devalltect00/Path-Header-Scanner/tree/main/docs"
+Documentation = "https://devalltect00.github.io/devalltect-docs/docs/path-header-scanner"
+Changelog = "https://github.com/devalltect00/Path-Header-Scanner/blob/main/CHANGELOG.md"
+Discussions = "https://github.com/devalltect00/Path-Header-Scanner/discussions"
+Releases = "https://github.com/devalltect00/Path-Header-Scanner/releases"
+"GitHub Actions" = "https://github.com/devalltect00/Path-Header-Scanner/actions"
+"GitLab CI" = "https://gitlab.com/devalltects-group/Path-Header-Scanner/-/pipelines"
+"Container Images" = "https://github.com/devalltect00/Path-Header-Scanner/pkgs/container/path-header-scanner"
+
+[tool.devalltect.github]
+
+# Curated GitHub repository topics are maintained separately from the broader
+# Python package-discovery keywords under [project]. This table stores desired
+# metadata only; applying it to GitHub requires an explicit synchronization.
+topics = [
+    "path-header-scanner",
+    "path-header",
+    "header-scanner",
+    "file-header",
+    "header-validation",
+    "source-path",
+    "source-code",
+    "code-quality",
+    "code-maintenance",
+    "developer-tools",
+    "documentation",
+    "repository-tools",
+    "automation",
+    "dry-run",
+    "cli",
+    "python",
+]
+
+[tool.devalltect.gitlab]
+
+# Curated GitLab project topics are maintained separately from GitHub topics
+# and the broader Python package-discovery keywords under [project]. This table
+# stores desired metadata only; applying it to GitLab requires explicit
+# synchronization. Do not include credentials or other sensitive information.
+topics = [
+    "path-header-scanner",
+    "path-header",
+    "header-scanner",
+    "file-header",
+    "header-validation",
+    "source-path",
+    "source-code",
+    "code-quality",
+    "code-maintenance",
+    "developer-tools",
+    "documentation",
+    "repository-tools",
+    "automation",
+    "dry-run",
+    "cli",
+    "python",
+]
+
+[project.scripts]
+
+path-header-scanner = "app.cli.main:app"
+
+# =========================================================
+# TYPER
+# =========================================================
+
+[tool.typer]
+
+pretty_exceptions_enable = true
+
+# =========================================================
+# SETUPTOOLS
+# =========================================================
+
+[tool.setuptools.packages.find]
+
+include = [
+    "app*",
+]
+
+exclude = ["venv*"]
+
+[tool.setuptools.package-data]
+
+app = [
+    "templates/**/*",
+    "templates/*.toml",
+    "templates/**/*.toml",
+    "templates/*.py",
+    "templates/**/*.py",
+    "templates/*.txt",
+    "templates/**/*.txt",
+    "templates/*.md",
+    "templates/**/*.md",
+]
+
+# =========================================================
+# SETUPTOOLS_SCM
+# =========================================================
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "no-local-version"
+
+fallback_version = "0.1.0"
+
+# =========================================================
+# PYTEST
+# =========================================================
+
+[tool.pytest.ini_options]
+
+testpaths = [
+    "tests",
+]
+
+python_files = [
+    "test_*.py",
+]
+
+python_classes = [
+    "Test*",
+]
+
+python_functions = [
+    "test_*",
+]
+
+addopts = [
+    # -----------------------------------------------------
+    # Summary
+    # -----------------------------------------------------
+
+    "-ra",                          # Show extra test summary info for skipped, failed, xfailed, etc.
+
+    # -----------------------------------------------------
+    # Validation
+    # -----------------------------------------------------
+
+    "--strict-markers",             # Fail on unknown pytest markers.
+    "--strict-config",              # Fail on invalid or unknown pytest configuration.
+
+    # -----------------------------------------------------
+    # Output
+    # -----------------------------------------------------
+
+    "--tb=short",                   # Use shorter traceback output.
+
+    # -----------------------------------------------------
+    # COVERAGE
+    # -----------------------------------------------------
+
+    "--cov=app",                    # Enable coverage. Measure test coverage for the app package.
+    "--cov-report=term-missing",    # Shows missing lines directly in terminal output.
+
+    # -----------------------------------------------------
+    # IMPORTS
+    # -----------------------------------------------------
+
+    "--import-mode=importlib",      # Fixes import conflicts with same-named test files
+]
+
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+# =========================================================
+# BLACK
+# =========================================================
+
+[tool.black]
+
+line-length = 88
+target-version = ["py311"]
+
+# Preserve inactive migration/reference files even when paths are supplied
+# explicitly by pre-commit, an editor, or a developer command.
+force-exclude = '''
+(
+    /old/
+  | /example_before/
+  | \.deprecated\.py$
+  | \.old[^/]*\.py$
+  | \.dev\.py$
+  | [ _]copy\.py$
+  | _temp\.py$
+  | _temp_before\.py$
+)
+'''
+
+# =========================================================
+# RUFF
+# =========================================================
+
+[tool.ruff]
+
+line-length = 88
+target-version = "py311"
+
+# Respect `exclude` even when pre-commit or another caller supplies file paths
+# explicitly instead of relying on Ruff's recursive file discovery.
+force-exclude = true
+
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "**/old/**",
+    "**/example_before/**",
+    "**/*.deprecated.py",
+    "**/*.old*.py",
+    "**/*.dev.py",
+    "**/* copy.py",
+    "**/*_copy.py",
+    "**/*_temp.py",
+    "**/*_temp_before.py",
+]
+
+# =========================================================
+# RUFF LINT
+# =========================================================
+
+[tool.ruff.lint]
+
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle Warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+]
+
+ignore = [
+    "UP045",    # pyupgrade. Ignore checking for example: 'Optional[str]' -> 'str | None'
+    "COM812",   # flake8-commas. Ignore trailing comma
+    "E501",     # line-too-long
+    "UP042",     # pyupgrade StrEnum suggestion
+
+    # Additional (temporary - skipped)
+    "UP031",
+]
+
+[tool.ruff.lint.isort]
+
+known-first-party = ["app"]
+
+[tool.ruff.lint.per-file-ignores]
+
+"app/cli/commands/**/*.py" = ["F403", "F405"]
+
+# =========================================================
+# RUFF FORMAT
+# =========================================================
+
+[tool.ruff.format]
+
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+# =========================================================
+# BUILD SYSTEM
+# =========================================================
+
+[build-system]
+
+requires = [
+    "setuptools>=68",
+    "setuptools-scm>=8",
+    "wheel",
+]
+
+build-backend = "setuptools.build_meta"
+
+# =========================================================
+# COVERAGE
+# =========================================================
+
+[tool.coverage.run]
+
+source = ["app"]
+
+[tool.coverage.report]
+
+show_missing = true
+skip_covered = false

@@ -1,0 +1,96 @@
+# tests/test_developer_workflows.py
+
+"""Structural regression tests for Path Header Scanner developer workflows."""
+
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _read(relative_path: str) -> str:
+    """Read a project file as UTF-8 text."""
+
+    return (PROJECT_ROOT / relative_path).read_text(encoding="utf-8")
+
+
+def test_modular_make_workflows_are_installed() -> None:
+    """Keep the root Makefile small and load all workflow modules."""
+
+    makefile = _read("Makefile")
+    assert "include make/core/variables/variable.mk" in makefile
+    assert "include make/core/local/command.mk" in makefile
+    assert "include make/core/remote/command/runtime.mk" in makefile
+    assert "include make/core/help/command.mk" in makefile
+
+    local_commands = _read("make/core/local/command.mk")
+    assert "l-scan-apply" in local_commands
+    assert "--apply" in local_commands
+    assert "l-scan-apply-all" in local_commands
+    assert "for %%t in ($(PHS_SCAN_TARGETS))" in local_commands
+    assert 'TARGET="$$target"' in local_commands
+
+
+def test_development_helpers_reuse_the_app_image() -> None:
+    """Only the development app service should own the build definition."""
+
+    compose = _read("docker-compose.dev.yml")
+    assert "x-development-service: &development-service" in compose
+    assert compose.count("build: *development-build") == 1
+    assert compose.count("<<: *development-service") == 10
+    assert "extends:\n      service: app" not in compose
+
+
+def test_dockerfile_validates_runtime_and_accepts_an_explicit_version() -> None:
+    """Container builds should validate imports and support SCM version injection."""
+
+    dockerfile = _read("Dockerfile")
+    assert "ARG PHS_BUILD_VERSION" in dockerfile
+    assert dockerfile.count("SETUPTOOLS_SCM_PRETEND_VERSION") == 2
+    assert 'RUN python -c "from app.cli.main import app"' in dockerfile
+
+
+def test_published_images_receive_the_scm_package_version() -> None:
+    """Published development and production images should retain package versions."""
+
+    development = _read(".github/workflows/docker-dev.yml")
+    production = _read(".github/workflows/docker-prod.yml")
+
+    assert "python -m app.core.build.version" in development
+    assert "PHS_BUILD_VERSION=${{ steps.package-version.outputs.value }}" in development
+    assert "python -m app.core.build.version" in production
+    assert "PHS_BUILD_VERSION=${{ steps.version.outputs.version }}" in production
+
+
+def test_release_workflows_enforce_reviewed_tag_publication() -> None:
+    """Hosted workflows should publish only reviewed stable or prerelease tags."""
+
+    production = _read(".github/workflows/docker-prod.yml")
+    release = _read(".github/workflows/release.yml")
+    gitlab_development = _read(".gitlab/docker-dev.yml")
+    gitlab_production = _read(".gitlab/docker-prod.yml")
+    gitlab_release = _read(".gitlab/release.yml")
+
+    for text in (production, release, gitlab_production, gitlab_release):
+        assert "annotated Git tag" in text
+        assert "rc|dev|post" in text
+
+    assert "branches:" not in production
+    assert "steps.vars.outputs.image_name" in production
+    assert "publish_latest" in production
+    assert "type=sha" not in production
+    assert "docker/dev/Dockerfile" not in gitlab_development
+    assert "docker/prod/Dockerfile" not in gitlab_production
+    assert "--target development" in gitlab_development
+    assert "--target production" in gitlab_production
+    assert 'description: "./RELEASE_NOTES.md"' in gitlab_release
+
+
+def test_ignore_files_cover_local_test_workspaces() -> None:
+    """Local Pytest workspaces should stay outside Git and image contexts."""
+
+    for ignore_file in (".gitignore", ".dockerignore"):
+        text = _read(ignore_file)
+        assert ".pytest-tmp-*/" in text
+        assert "\n/build/\n" in text
+
+    assert ".config/path_header_scanner/config.toml" in _read(".dockerignore")

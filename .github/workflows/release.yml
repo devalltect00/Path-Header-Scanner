@@ -1,0 +1,192 @@
+# .github/workflows/release.yml
+
+name: 🚀 Release
+
+run-name: 🚀 Release • ${{ inputs.tag || github.ref_name }}
+
+# Build package artifacts and create a GitHub Release from an existing,
+# non-empty annotated SemVer tag. The annotated tag message is the public
+# release description.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag, such as v1.0.0 or v1.0.0-rc.1
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  packages: read
+
+env:
+  RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+
+jobs:
+  release:
+    name: 🚀 Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+
+      - name: 🏷️ Validate annotated release tag
+        id: version
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check packaging
+
+          TAG_REGEX='^v[0-9]+\.[0-9]+\.[0-9]+([.-](alpha|beta|rc|dev|post)\.[0-9]+)?(\+[0-9A-Za-z.]+)?$'
+          TAG="$RELEASE_TAG"
+
+          if [[ ! "$TAG" =~ $TAG_REGEX ]]; then
+            echo "Invalid Path Header Scanner release tag: $TAG" >&2
+            exit 1
+          fi
+
+          if ! git show-ref --verify --quiet "refs/tags/$TAG"; then
+            echo "Release tag does not exist in the repository: $TAG" >&2
+            exit 1
+          fi
+
+          if [[ "$(git cat-file -t "refs/tags/$TAG")" != "tag" ]]; then
+            echo "GitHub Releases require an annotated Git tag: $TAG" >&2
+            exit 1
+          fi
+
+          TAG_MESSAGE="$(git tag -l --format='%(contents)' "$TAG")"
+          if [[ -z "${TAG_MESSAGE//[[:space:]]/}" ]]; then
+            echo "Annotated release tag has an empty message: $TAG" >&2
+            exit 1
+          fi
+
+          BUILD_VERSION="$(python -m app.core.build.version)"
+          EXPECTED_VERSION="$(python -c 'from packaging.version import Version; import sys; print(Version(sys.argv[1].removeprefix("v")).public)' "$TAG")"
+
+          if [[ -z "$BUILD_VERSION" || "$BUILD_VERSION" != "$EXPECTED_VERSION" ]]; then
+            echo "Resolved package version '$BUILD_VERSION' does not match release tag '$TAG' ('$EXPECTED_VERSION')." >&2
+            exit 1
+          fi
+
+          VERSION="${TAG#v}"
+          TYPE="stable"
+
+          case "$VERSION" in
+            *alpha*) TYPE="alpha" ;;
+            *beta*) TYPE="beta" ;;
+            *rc*) TYPE="rc" ;;
+            *dev*) TYPE="dev" ;;
+            *post*) TYPE="post" ;;
+          esac
+
+          PRERELEASE=false
+          if [[ "$TYPE" != "stable" && "$TYPE" != "post" ]]; then
+            PRERELEASE=true
+          fi
+
+          IMAGE_TAG="${TAG//+/-}"
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "image_tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "type=$TYPE" >> "$GITHUB_OUTPUT"
+          echo "prerelease=$PRERELEASE" >> "$GITHUB_OUTPUT"
+
+      - name: 🧠 Build release title
+        id: title
+        shell: bash
+        run: |
+          TYPE="${{ steps.version.outputs.type }}"
+          TAG="${{ steps.version.outputs.tag }}"
+          TITLE="🚀 Release"
+
+          case "$TYPE" in
+            alpha) TITLE="🧪 Alpha Release" ;;
+            beta) TITLE="🔬 Beta Release" ;;
+            rc) TITLE="🚧 Release Candidate" ;;
+            dev) TITLE="🛠️ Development Release" ;;
+            post) TITLE="📦 Post Release" ;;
+          esac
+
+          echo "title=$TITLE $TAG" >> "$GITHUB_OUTPUT"
+
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
+
+      - name: 🧪 Run validation workflow
+        run: make check-ci
+
+      - name: 📦 Build package artifacts
+        run: python -m build
+
+      - name: 🔤 Normalize image name
+        id: vars
+        shell: bash
+        run: |
+          echo "image_name=${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+
+      - name: 📝 Generate release notes
+        id: notes
+        shell: bash
+        run: |
+          TAG="${{ steps.version.outputs.tag }}"
+          VERSION="${{ steps.version.outputs.version }}"
+          TYPE="${{ steps.version.outputs.type }}"
+          IMAGE_TAG="${{ steps.version.outputs.image_tag }}"
+          COMMIT_SHA="$(git rev-parse HEAD)"
+
+          git tag -l --format='%(contents)' "$TAG" > RELEASE_NOTES.md
+
+          cat <<EOF >> RELEASE_NOTES.md
+
+          ---
+
+          ## 📅 Release Information
+
+          - Version: `$VERSION`
+          - Release Type: `$TYPE`
+          - Repository: `${{ github.repository }}`
+          - Commit: `$COMMIT_SHA`
+          - Workflow: `${{ github.workflow }}`
+
+          ## 🐋 Docker Image
+
+          ```bash
+          docker pull ghcr.io/${{ steps.vars.outputs.image_name }}:$IMAGE_TAG
+          ```
+
+          ## 📥 Python Package
+
+          Artifacts are attached to this release.
+          EOF
+
+          echo "notes_path=RELEASE_NOTES.md" >> "$GITHUB_OUTPUT"
+
+      - name: 🚀 Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.title.outputs.title }}
+          body_path: ${{ steps.notes.outputs.notes_path }}
+          prerelease: ${{ steps.version.outputs.prerelease }}
+          files: |
+            dist/*.whl
+            dist/*.tar.gz
+          make_latest: ${{ steps.version.outputs.type == 'stable' }}

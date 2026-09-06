@@ -1,0 +1,166 @@
+site_name: ⛶ Path Header Scanner
+site_description: Developer utility for inserting, validating, and updating file path headers across source code and documentation files.
+# site_url: https://mydomainsite.com
+site_url: http://localhost:8001
+site_author: Devalltect00
+
+repo_name: path-header-scanner
+repo_url: https://github.com/devalltect00/Path-Header-Scanner
+
+#gitlab
+# edit_uri: -/edit/main/backend/docs
+#github
+# edit_uri: edit/main/docs/
+
+theme:
+    name: material
+    language: en
+    palette:
+        - media: "(prefers-color-scheme: light)"
+          scheme: default
+          primary: purple
+          accent: deep purple
+          toggle:
+              icon: material/weather-night
+              name: Switch to dark mode
+        - media: "(prefers-color-scheme: dark)"
+          scheme: slate
+          primary: teal
+          accent: lime
+          toggle:
+              icon: material/weather-sunny
+              name: Switch to light mode
+    font:
+        text: Roboto
+        code: Fira Code
+    icon:
+        logo: fontawesome/solid/d
+    features:
+        - navigation.instant
+        - navigation.tracking
+        - navigation.tabs
+        - navigation.sections
+        - navigation.expand
+        - navigation.footer
+        - navigation.top
+        - toc.integrate
+        - header.autohide
+        - content.code.annotate
+        - content.code.copy
+        - content.tabs.link
+        - search.suggest
+        - search.highlight
+
+markdown_extensions:
+    - admonition
+    - attr_list
+    - def_list
+    - footnotes
+    - codehilite
+    - md_in_html
+    - tables
+
+    - toc:
+          permalink: true
+
+    - pymdownx.keys
+    - pymdownx.tasklist
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences
+    - pymdownx.details
+    - pymdownx.tabbed:
+          alternate_style: true
+    - pymdownx.highlight:
+          anchor_linenums: true
+          line_spans: __span
+          pygments_lang_class: true
+    # - pymdownx.emoji
+    # Local (run well)
+    - pymdownx.emoji:
+          emoji_index: !!python/name:material.extensions.emoji.twemoji
+          emoji_generator: !!python/name:material.extensions.emoji.to_svg
+              # (wwhen build for production)
+              # - pymdownx.emoji:
+              # emoji_index: !!python/name:material.extensions.emoji.twemoji
+              # emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+
+plugins:
+    - search:
+          lang: en
+
+docs_dir: docs
+site_dir: site
+
+nav:
+    - 🏠 Home:
+          - 🔎 Overview: index.md
+
+    - 👤 User Guide:
+          - How To Use: how-to-use.md
+          - Overview: user-guide/overview.md
+          - Quick Start: user-guide/quickstart.md
+          - Commands: user-guide/commands.md
+          - Dry-run Safety: dry-run.md
+          - Installation Methods: user-guide/installation-methods.md
+          - Lifecycle (Start/Run/Stop/Remove): user-guide/lifecycle.md
+          - Legacy Overview (Reference): user-guide/legacy-overview.md
+          - Legacy User Guide (Reference): user-guide/legacy-user-guide.md
+
+    - 🧑‍💻 Developer Guide:
+          - Getting Started: developer-guide/getting-started.md
+          - Developer Guide (Reference): developer-guide/developer-guide.md
+          - Make Workflow: developer-guide/make-workflow.md
+          - Docker Workflow: developer-guide/docker-workflow.md
+          - AI Development Workflow: developer-guide/blackbox/ai-development-workflow.md
+          - Tooling:
+                - Ruff Ignore Rules: developer-guide/tooling/ruff/ruff-ignore.md
+                - Ruff Select Rules: developer-guide/tooling/ruff/ruff-select.md
+
+    - 🏗 Architecture:
+          - Design Patterns: architecture/design-patterns.md
+          - Workflow: architecture/workflow.md
+          - Diagrams: architecture/diagrams.md
+
+    - 🧪 Testing:
+          - Testing Guide: testing/testing-guide.md
+
+    - 🗺 Project:
+          - Project Structure: project/project-structure.md
+          - Supported Languages: project/languages/supported-languages.md
+          - Markdown Language Strategy: project/languages/markdown-language-strategy.md
+
+    - 📖 Reads:
+          - Documentation Audit Report: reads/documentation-audit-report.md
+          - Linting vs Formatting: reads/linting-vs-formatting.md
+          - Ruff: reads/ruff.md
+
+    - 📌 Core Docs:
+          - Badges: badges.md
+          - Installation: installation.md
+          - Usage: usage.md
+          - Configuration: configuration.md
+          - Infrastructure: infrastructure.md
+          - CI/CD: ci-cd.md
+          - TODO Tracking History: TODO_tracking_history.md
+
+extra:
+    generator: false
+    social:
+        - icon: material/linkedin
+          link: https://www.linkedin.com/in/rizky-purwanto-fernandes/
+        - icon: simple/github
+          link: https://github.com/devalltect00
+        - icon: octicons/globe-24
+          link: https://personal-portfolio-devalltect00.vercel.app/
+
+extra_css:
+    - stylesheets/extra.css
+
+copyright: Copyright &copy; 2026 Devalltect
+
+# Reference
+# - https://squidfunk.github.io/mkdocs-material/
+# - https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/
+# - https://pygments.org/docs/lexers/

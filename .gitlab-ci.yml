@@ -1,0 +1,57 @@
+# =========================================================
+# 🦊 GitLab CI/CD Pipeline
+# =========================================================
+#
+# Purpose
+# -------
+# Main GitLab CI/CD entry point.
+#
+# GitLab automatically discovers ONLY this file.
+#
+# Additional pipeline definitions are split into smaller
+# files under `.gitlab/` and imported via `include`.
+#
+# Architecture
+# ------------
+#
+# .gitlab-ci.yml
+# ├── .gitlab/ci.yml
+# ├── .gitlab/docker-dev.yml
+# ├── .gitlab/docker-prod.yml
+# └── .gitlab/release.yml
+#
+# GitHub Equivalent
+# -----------------
+#
+# .github/workflows/
+# ├── ci.yml
+# ├── docker-dev.yml
+# ├── docker-prod.yml
+# └── release.yml
+#
+# Responsibilities
+# ----------------
+# - Validation / Testing
+# - Development Docker Images
+# - Production Docker Images
+# - Release Creation
+#
+# Notes
+# -----
+# GitLab:
+#   - Discovers only `.gitlab-ci.yml`
+#   - Does NOT automatically discover
+#     `.gitlab/*.yml`
+#
+# =========================================================
+
+stages:
+  - test
+  - docker
+  - release
+
+include:
+  - local: ".gitlab/ci.yml"
+  - local: ".gitlab/docker-dev.yml"
+  - local: ".gitlab/docker-prod.yml"
+  - local: ".gitlab/release.yml"

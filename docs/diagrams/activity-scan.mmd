@@ -1,0 +1,21 @@
+flowchart TD
+    START([Start]) --> U["User runs scan command"]
+    U --> P["CLI parses args/options"]
+    P --> R["Resolve path + build runtime context"]
+    R --> S["Scan files by extension/strategy"]
+    S --> T["Process each matched file"]
+    T --> V{"Error while processing file?"}
+    V -- Yes --> W["Capture failure result and continue"]
+    V -- No --> X{"Header change required?"}
+    X -- No --> Y["Mark file as valid"]
+    X -- Yes --> Z{"Apply mode?"}
+    Z -- No --> AA["Record pending change (dry-run)"]
+    Z -- Yes --> AB["Write file update"]
+
+    W --> AC["Aggregate per-file statuses"]
+    Y --> AC
+    AA --> AC
+    AB --> AC
+
+    AC --> AD["Print summary/report"]
+    AD --> END([End])

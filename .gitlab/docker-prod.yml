@@ -1,0 +1,99 @@
+# =========================================================
+# 🚀 Production Docker Image
+# =========================================================
+#
+# Build production images only from reviewed annotated SemVer tags. Stable
+# releases update `latest`; prereleases publish only their exact version tag.
+#
+# =========================================================
+
+docker:prod:
+  stage: docker
+
+  image: docker:27
+
+  services:
+    - docker:27-dind
+
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+    GIT_DEPTH: "0"
+
+  before_script:
+    - apk add --no-cache git python3 py3-packaging
+    - git --version
+    - python3 --version
+    - docker version
+
+  script:
+    - |
+      TAG_REGEX='^v[0-9]+\.[0-9]+\.[0-9]+([.-](alpha|beta|rc|dev|post)\.[0-9]+)?(\+[0-9A-Za-z.]+)?$'
+      STABLE_TAG_REGEX='^v[0-9]+\.[0-9]+\.[0-9]+(\+[0-9A-Za-z.]+)?$'
+      TAG="$CI_COMMIT_TAG"
+
+      if ! printf '%s' "$TAG" | grep -Eq "$TAG_REGEX"; then
+        echo "Invalid Path Header Scanner release tag: $TAG" >&2
+        exit 1
+      fi
+
+      if ! git fetch --force origin "refs/tags/$TAG:refs/tags/$TAG"; then
+        echo "Unable to fetch release tag metadata: $TAG" >&2
+        exit 1
+      fi
+
+      if ! git show-ref --verify --quiet "refs/tags/$TAG"; then
+        echo "Release tag does not exist in the repository: $TAG" >&2
+        exit 1
+      fi
+
+      if [ "$(git cat-file -t "refs/tags/$TAG")" != "tag" ]; then
+        echo "Production images require an annotated Git tag: $TAG" >&2
+        exit 1
+      fi
+
+      TAG_MESSAGE="$(git tag -l --format='%(contents)' "$TAG")"
+      if ! printf '%s' "$TAG_MESSAGE" | grep -q '[^[:space:]]'; then
+        echo "Annotated release tag has an empty message: $TAG" >&2
+        exit 1
+      fi
+
+      BUILD_VERSION="$(python3 -m app.core.build.version)"
+      EXPECTED_VERSION="$(python3 -c 'from packaging.version import Version; import sys; print(Version(sys.argv[1].removeprefix("v")).public)' "$TAG")"
+
+      if [ -z "$BUILD_VERSION" ] || [ "$BUILD_VERSION" != "$EXPECTED_VERSION" ]; then
+        echo "Resolved build version '$BUILD_VERSION' does not match release tag '$TAG' ('$EXPECTED_VERSION')." >&2
+        exit 1
+      fi
+
+      IMAGE_TAG="$(printf '%s' "$TAG" | tr '+' '-')"
+
+      echo "$CI_REGISTRY_PASSWORD" |
+        docker login "$CI_REGISTRY" \
+          -u "$CI_REGISTRY_USER" \
+          --password-stdin
+
+      docker build \
+        --build-arg PHS_BUILD_VERSION="$BUILD_VERSION" \
+        -f Dockerfile \
+        --target production \
+        --label org.opencontainers.image.title="$CI_PROJECT_NAME" \
+        --label org.opencontainers.image.description="Source path-header validation and repair automation" \
+        --label org.opencontainers.image.url="$CI_PROJECT_URL" \
+        --label org.opencontainers.image.source="$CI_PROJECT_URL" \
+        --label org.opencontainers.image.version="$TAG" \
+        --label org.opencontainers.image.revision="$CI_COMMIT_SHA" \
+        --label org.opencontainers.image.created="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+        -t "$CI_REGISTRY_IMAGE:$IMAGE_TAG" \
+        .
+
+      docker push "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
+
+      if printf '%s' "$TAG" | grep -Eq "$STABLE_TAG_REGEX"; then
+        docker tag "$CI_REGISTRY_IMAGE:$IMAGE_TAG" "$CI_REGISTRY_IMAGE:latest"
+        docker push "$CI_REGISTRY_IMAGE:latest"
+      else
+        echo "Prerelease tag detected; latest will not be updated."
+      fi
+
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+([.-](alpha|beta|rc|dev|post)\.\d+)?(\+[0-9A-Za-z.]+)?$/'

@@ -1,0 +1,27 @@
+flowchart TD
+    CLI["app/cli<br/>Typer entrypoint + command routing"]
+    CORE["app/core<br/>Initialize + Scan orchestration"]
+    LANG["app/languages<br/>Language header strategies"]
+    CFG["app/config<br/>Config loading and resolution"]
+    MODELS["app/models<br/>Result/status domain models"]
+    UTILS["app/utils<br/>Path/logging/parsing/resolver helpers"]
+    SERVICES["app/services<br/>Banner/version related services"]
+    TEMPLATES["app/templates<br/>Init scaffold source files"]
+    THEME["app/theme<br/>CLI style/theme definitions"]
+    CONST["app/constants + app/cli/constants<br/>Shared constants/options enums"]
+
+    CLI --> CORE
+    CLI --> CFG
+    CLI --> SERVICES
+    CLI --> THEME
+    CLI --> CONST
+
+    CORE --> LANG
+    CORE --> MODELS
+    CORE --> UTILS
+    CORE --> TEMPLATES
+    CORE --> CFG
+
+    LANG --> MODELS
+    CFG --> UTILS
+    SERVICES --> UTILS

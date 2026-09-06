@@ -1,0 +1,23 @@
+flowchart TD
+    A["CLI scan command invoked"] --> B["Resolve target path"]
+    B --> C["Build scanner + processor context"]
+    C --> D["Discover candidate files recursively"]
+    D --> E{"Supported language strategy exists?"}
+    E -- No --> F["Skip file"]
+    E -- Yes --> G["Read file content"]
+    G --> H["Extract current header"]
+    H --> I["Generate expected header"]
+    I --> J{"Header equals expected?"}
+    J -- Yes --> K["Mark VALID"]
+    J -- No --> L{"Header exists?"}
+    L -- Yes --> M["Replace header region"]
+    L -- No --> N["Insert new header"]
+    M --> O{"--apply enabled?"}
+    N --> O
+    O -- No --> P["Dry-run result only"]
+    O -- Yes --> Q["Write updated file"]
+    Q --> R["Mark UPDATED/INSERTED"]
+    P --> S["Aggregate summary"]
+    K --> S
+    F --> S
+    R --> S

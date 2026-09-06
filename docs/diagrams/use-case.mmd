@@ -1,0 +1,24 @@
+flowchart LR
+    User["Developer / DevOps User"]
+    System["Path Header Scanner CLI"]
+
+    UC1["Initialize project setup (--init / init)"]
+    UC2["Run dry-run scan (scan TARGET)"]
+    UC3["Apply scan updates (scan TARGET --apply)"]
+    UC4["Inspect command help (--help)"]
+    UC5["Check version (--version)"]
+    UC6["Adjust config in .config/path_header_scanner/config.toml"]
+
+    User --> UC1
+    User --> UC2
+    User --> UC3
+    User --> UC4
+    User --> UC5
+    User --> UC6
+
+    UC1 --> System
+    UC2 --> System
+    UC3 --> System
+    UC4 --> System
+    UC5 --> System
+    UC6 --> System

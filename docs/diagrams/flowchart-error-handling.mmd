@@ -1,0 +1,17 @@
+flowchart TD
+    A["Begin processing file"] --> B{"Any exception?"}
+    B -- No --> C{"Header state"}
+    C -- valid --> D["Set status: VALID"]
+    C -- missing --> E["Set status: INSERTED (or pending insert)"]
+    C -- invalid --> F["Set status: UPDATED (or pending update)"]
+
+    B -- Yes --> G["Set status: FAILED"]
+    G --> H["Attach error message/context"]
+
+    D --> I["Return FileProcessResult"]
+    E --> I
+    F --> I
+    H --> I
+
+    I --> J["Aggregate into run summary"]
+    J --> K["Continue processing next file (no global crash)"]

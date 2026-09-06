@@ -1,0 +1,25 @@
+# docker-compose.yml
+
+name: path-header-scanner
+
+services:
+  base:
+    image: path-header-scanner-base:latest
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+
+    working_dir: /workspace
+
+    volumes:
+      - .:/workspace
+
+    environment:
+      PYTHONUNBUFFERED: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      HOST_PWD: ${PWD}
+
+    stdin_open: true
+    tty: true

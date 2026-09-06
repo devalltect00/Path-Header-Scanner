@@ -1,0 +1,13 @@
+flowchart TD
+    NOTE["No database layer in this project.<br/>Models are in-memory/domain structures."]
+
+    RESULT["app/models/result.py<br/>FileProcessResult"]
+    ENUMS["app/models/enums.py<br/>FileStatus and related enums"]
+    CORE_SCAN["app/core/scan/*<br/>scanner/processor/updater"]
+    CLI["app/cli/commands/*<br/>command output and summary"]
+
+    NOTE --> RESULT
+    RESULT --> ENUMS
+    CORE_SCAN --> RESULT
+    CORE_SCAN --> ENUMS
+    CLI --> RESULT

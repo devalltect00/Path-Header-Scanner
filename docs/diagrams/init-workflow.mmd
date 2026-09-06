@@ -1,0 +1,23 @@
+flowchart TD
+    A["CLI init command invoked"] --> B["Load configuration"]
+    B --> C["Resolve init args (--mode, --force, --ask)"]
+    C --> D["Build initialization spec"]
+    D --> E{"Mode selection"}
+    E -- config --> F["Prepare config artifacts"]
+    E -- templates --> G["Prepare template artifacts"]
+    E -- examples --> H["Prepare example artifacts"]
+    E -- all --> I["Prepare all relevant artifacts"]
+
+    F --> J{"Overwrite needed?"}
+    G --> J
+    H --> J
+    I --> J
+
+    J -- ask enabled --> K["Prompt user confirmation"]
+    J -- force enabled --> L["Overwrite directly"]
+    K --> L
+    J -- no overwrite needed --> M["Write missing artifacts"]
+
+    L --> N["Write selected artifacts"]
+    M --> O["Report init result"]
+    N --> O

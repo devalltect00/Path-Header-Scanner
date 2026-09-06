@@ -1,0 +1,171 @@
+feat(scanner)!: checkpoint the Path Header Scanner 1.0 foundation
+
+Checkpoint the first production foundation for Path Header Scanner. This
+prepares the project's first formal SemVer release baseline and consolidates
+the complete scanner, configuration, safety, architecture, testing,
+documentation, container, automation, and developer-workflow foundation rather
+than describing an upgrade from an earlier published version.
+
+Path Header Scanner provides a preview-first workflow for discovering supported
+source and documentation files, validating their repository-relative path
+headers, and applying explicitly approved corrections. The implementation is
+structured so language rules, scanning, updates, CLI interaction, configuration,
+logging, and presentation can be understood and extended independently.
+
+### ✨ Features
+
+#### Scanning and path-header management
+
+- Added recursive discovery and validation of path headers across selected repository targets.
+- Added language-aware insertion and replacement of missing or stale headers.
+- Added support for Python, JavaScript and TypeScript, Shell, PHP, HTML, and Markdown header syntax.
+- Added configurable ignore rules for repositories, virtual environments, caches, build outputs, and user-selected paths.
+- Added deterministic repository-relative path rendering with safe handling of existing special lines and trailing newlines.
+- Added preview results that distinguish valid, inserted, updated, unsupported, skipped, and failed files.
+- Added explicit `--apply` mutation control while keeping scans non-mutating by default.
+
+#### CLI, initialization, and configuration
+
+- Added the `path-header-scanner init` and `path-header-scanner scan <target>` command workflows.
+- Added Rich banners, help, panels, progress displays, summaries, and actionable error presentation.
+- Added working-directory, apply, dry-run, debug, logging, banner, version, help, and completion controls.
+- Added `.config/path_header_scanner/config.toml` with packaged defaults and CLI → configuration → internal-default precedence.
+- Added initialization builders, models, registries, presenters, and scaffold generation for project configuration.
+- Added rotating file logging alongside configurable console diagnostics.
+
+#### Safety and dry-run behavior
+
+- Made scan preview the default so target files are not changed without `--apply`.
+- Added `--dry-run` to initialization and scanning workflows.
+- Made scan dry-run override both CLI `--apply` and configured `apply = true` settings.
+- Prevented dry-run initialization from creating directories, writing files, overwriting content, or prompting for confirmation.
+- Kept read-only discovery, validation, and rendering available during simulation while preventing target-project mutations.
+- Added explicit terminal messages describing whether a scan is a preview, dry run, or live apply operation.
+
+### 🧠 Improvements
+
+#### User experience
+
+- Added clear command-specific help and examples for local, Docker, Compose, and Make execution.
+- Added visible target resolution and summaries so users can review the scan scope and intended effects.
+- Added configuration-driven defaults without removing one-command CLI overrides.
+- Improved validation failures and unsupported-file reporting without interrupting the entire scan.
+- Added documented dry-run guarantees and configuration precedence.
+
+#### Developer experience
+
+- Added modular Make targets for setup, local execution, tests, linting, formatting, QA, documentation, builds, Docker, Compose, remote images, Git helpers, and cleanup.
+- Added development and production Docker and Docker Compose workflows.
+- Added GitHub Actions and GitLab CI definitions for validation, images, and releases.
+- Added setuptools-scm packaging, Ruff, Black, Pytest coverage, MkDocs Material, pre-commit, build, and distribution tooling.
+- Added project guidance, contribution, security, licensing, architecture, workflow, and testing documentation.
+
+### 🧠 Refactoring and architecture
+
+- Separated Typer command parsing, options, models, resolution, and presentation under `app/cli`.
+- Separated scan discovery, processing, validation, and file updates under `app/core/scan`.
+- Isolated language-specific header behavior behind focused strategy implementations under `app/languages`.
+- Added shared result models, domain exceptions, path utilities, logging utilities, UI components, and theme definitions.
+- Separated initialization planning from scaffold persistence so dry-run can stop before the mutation boundary.
+- Added an `AGENTS.md` engineering contract covering scan safety, dry-run behavior, configuration, testing, and release safeguards.
+
+### 🐛 Bug fixes and hardening
+
+- Corrected initialization configuration imports and result handling.
+- Corrected configuration-path and default-resolution behavior.
+- Prevented dry-run scans from applying changes when mutation was enabled elsewhere.
+- Prevented dry-run initialization from reaching the scaffold writer.
+- Improved virtual-environment and generated-directory exclusion behavior.
+- Corrected Make and container command wiring for the current CLI hierarchy.
+- Aligned Docker ignore rules, Git ignore rules, package metadata, and container startup behavior with the active project layout.
+
+### 🧪 Tests
+
+- Added CLI, configuration, scanner, processor, updater, language-strategy, initialization, UI, service, and utility coverage.
+- Added regression tests for preview mode, apply mode, configured defaults, CLI precedence, and dry-run override behavior.
+- Added tests proving dry-run initialization creates no scaffold and dry-run scan leaves target files unchanged.
+- Added centralized CLI exception boundaries, concise remediation for expected failures, hidden normal-mode tracebacks, and regression coverage for init and scan failures.
+- Added command-help and developer-workflow validation for local, Docker, Compose, and Make entry points.
+- Validated the release-candidate baseline with 123 passing tests and 84% measured coverage on Python 3.14.
+
+### 📚 Documentation
+
+- Added installation, configuration, usage, how-to, infrastructure, architecture, testing, supported-language, and developer guides.
+- Added a dedicated dry-run safety guide with command behavior, precedence, guarantees, and Make examples.
+- Added MkDocs Material navigation and Docker-based documentation builds.
+- Added README guidance for preview scans, explicit application, initialization, configuration, Docker, Compose, and Make workflows.
+- Added project structure and diagram documentation to make the scanner lifecycle and extension points easier to understand.
+
+### ⚙️ CI/CD and distribution
+
+- Added Python packaging metadata and a console entry point for `path-header-scanner`.
+- Added dynamic package versions from SemVer Git tags through setuptools-scm.
+- Added GitHub and GitLab validation and release automation definitions.
+- Added development and production container images plus Compose workflows.
+- Added reusable quality, package, documentation, and release-support Make targets.
+
+### 🧭 Checkpoint ownership
+
+Checkpoint 1 includes the product foundation and the general CI/CD, build,
+quality, compatibility, and documentation corrections below. These were
+previously described in the RC.1 message; they belong to this implementation
+checkpoint, not to the later promotion commit.
+
+Private GitLab package delivery and its publication safeguards belong to
+checkpoint 2. The optional repository-metadata helper belongs to checkpoint 3.
+All three checkpoints remain untagged; RC.1 promotes their combined result.
+
+### 🔧 CI/CD corrections
+
+- Run validation on Python 3.11 and 3.14 for supported branches, merge requests, and stable or prerelease version tags.
+- Build containers from the root multi-stage Dockerfile with explicit development or production targets.
+- Derive GHCR image names from the active repository so temporary test repositories never publish to a hardcoded production namespace.
+- Require an existing non-empty annotated SemVer tag before production-image or provider-release publication.
+- Publish exact stable or prerelease image tags and update `latest` only for stable releases.
+- Preserve the complete annotated tag message as the GitHub or GitLab release description.
+- Resolve and validate the Python package version before Docker build or release publication.
+- Correct GitLab Dockerfile paths, image labels, tag rules, artifact retention, and release-note links.
+
+### 🧰 Build and quality alignment
+
+- Add a shell-free Git build-version resolver and pass `PHS_BUILD_VERSION` into Docker builds that exclude `.git`.
+- Root-anchor generated build and backup ignore rules without hiding the tracked build helper.
+- Pin Ruff and Black consistently across dependencies and pre-commit hooks.
+- Make CLI help assertions ANSI-independent so hosted terminals do not split `--dry-run` unexpectedly.
+
+### 🧪 Tests and documentation
+
+- Add regressions for version normalization, dynamic registry naming, annotated-tag enforcement, prerelease handling, stable-only `latest`, and root Dockerfile usage.
+- Document the CI matrix, tag boundary, registry naming, release notes, and local non-publishing validation workflow.
+- Record the untagged checkpoints → RC.1 commit and tag → stable commit and tag sequence.
+
+### 🧪 Validation record boundary
+
+The test counts above are historical foundation results. Later checkpoint
+results and final RC checks are separate records; this message does not claim
+that the exact RC or stable release commit has already passed validation.
+
+### ⚠️ First-release notes
+
+- This is the first formal production release line; there is no previous supported release to migrate from.
+- Python 3.11 or newer is supported by the package, with Python 3.14 used for the standard development and container runtime.
+- Scans are previews by default; users must opt in with `--apply` to update files.
+- `--dry-run` always prevents project-file mutations, including when apply mode is configured.
+- Configuration lives at `.config/path_header_scanner/config.toml`.
+
+BREAKING CHANGE: v1.0.0 establishes the initial supported command hierarchy,
+configuration path and schema, language strategies, preview/apply safety model,
+package entry point, and internal extension boundaries. Future compatibility is
+measured from this 1.0 release line.
+
+Release target: v1.0.0-rc.1
+Previous release baseline: none — first formal release
+Tag: none; this development checkpoint is intentionally untagged
+
+🔖 **Tags**:
+- Type: `#feature`, `#improvement`, `#refactor`, `#bugfix`
+- Product: `#path-header`, `#scanner`, `#file-update`, `#language-strategies`
+- Architecture: `#cli`, `#core`, `#configuration`, `#ui`, `#initialization`
+- Quality: `#tests`, `#dry-run`, `#logging`, `#safety`
+- Delivery: `#docs`, `#make`, `#docker`, `#ci`, `#release`
+- Stability: `#first-release`, `#development-checkpoint`, `#semver`

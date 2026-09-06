@@ -1,0 +1,11 @@
+✅ Final Release path-header-scanner v0.0.1
+
+**path-header-scanner v0.0.1** is now stable and production-ready. All feature and fixes from pre-releases (alpha, beta, rc) are included.
+
+### ✨ Highlights
+
+- *(Nothing yet)*
+
+---
+
+✅ This version is **stable** and **suitable** for production use.

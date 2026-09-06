@@ -1,0 +1,18 @@
+flowchart TD
+    ENTRY["path-header-scanner"]
+    GLOBAL["Global Options<br/>--help / --version / --no-banner"]
+
+    INIT["init command"]
+    SCAN["scan command"]
+    MAIN["main callback (default behavior)"]
+
+    INIT_OPTS["init options<br/>--mode<br/>--force/--no-force<br/>--ask"]
+    SCAN_OPTS["scan options<br/>TARGET_DIRECTORY<br/>--apply<br/>--debug<br/>--workdir<br/>--include-target-directory<br/>--exclude-target-directory"]
+
+    ENTRY --> GLOBAL
+    ENTRY --> MAIN
+    ENTRY --> INIT
+    ENTRY --> SCAN
+
+    INIT --> INIT_OPTS
+    SCAN --> SCAN_OPTS
