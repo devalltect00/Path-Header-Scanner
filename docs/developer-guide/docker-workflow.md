@@ -635,5 +635,11 @@ make docker-apply
 - Relative path handling is designed for mounted environments.
 - Docker Compose simplifies team onboarding and CI workflows.
 
+Stable production releases publish four coordinated references to the same
+image: exact `v1.0.0`, minor `v1.0`, major `v1`, and `latest`. Pin CI and
+reproducible automation to the immutable exact tag. The other aliases move only
+when a compatible stable release is published. Prereleases such as
+`v1.0.0-rc.1` publish only their exact tag.
+
 See [CI/CD and release contract](../ci-cd.md) for dynamic registry naming,
-annotated release tags, prerelease images, and stable-only `latest` behavior.
+annotated release tags, provider parity, and stable alias safeguards.

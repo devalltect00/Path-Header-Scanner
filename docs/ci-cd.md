@@ -11,7 +11,7 @@ images; production images and provider releases require a reviewed annotated tag
 | CI | `main`, `develop`, merge requests, and every pushed tag | None |
 | Python package gate | Any tag | Validates the annotated tag and smoke-tests canonical PEP 440 artifacts without publishing |
 | Development image | `develop` or `dev` | Publishes `dev` and commit-SHA tags |
-| Production image | Validated protected release tag | Publishes the exact tag; stable releases also update `latest` |
+| Production image | Validated protected release tag | Publishes the exact tag; stable releases also update matching minor, major, and `latest` aliases |
 | Private Python package | Validated protected release tag | Publishes an immutable wheel and sdist to GitLab's project PyPI registry |
 | Provider release | Validated protected release tag | Creates a release after image and package publication |
 
@@ -30,7 +30,12 @@ not create one.
 
 GitHub images use `ghcr.io/<owner>/<repository>:<tag>`. GitLab uses
 `$CI_REGISTRY_IMAGE:<tag>`. Forks and disposable repositories therefore remain
-inside their own registry namespace. Prereleases never update `latest`.
+inside their own registry namespace. Prereleases never update stable aliases.
+
+A stable `v1.0.0` release publishes `v1.0.0`, `v1.0`, `v1`, and `latest`.
+Use the immutable exact tag for reproducible automation. Minor, major, and
+`latest` are intentionally moving aliases. Prereleases remain exact-only and
+cannot move any stable alias.
 
 The complete annotated tag message becomes the public provider release
 description. Wheel and source-distribution artifacts are attached or linked.
@@ -64,10 +69,11 @@ forwarding in the GitLab group settings.
 1. Use `commit-message-v1.0.0-development-checkpoint.txt` for the comprehensive product commit; do not tag it.
 2. Use `commit-message-v1.0.0-rc.1.txt` for the CI/CD-finalization commit.
 3. Create the annotated RC.1 tag from `tag-message-v1.0.0-rc.1.txt` on that commit.
-4. After RC validation and cleanup, use `commit-message-v1.0.0.txt` for stable promotion.
-5. Create the annotated stable tag from `tag-message-v1.0.0.txt`.
+4. After RC validation, commit the stable-image alias work with `commit-message-v1.0.0-stabilization-checkpoint.txt`; do not tag it.
+5. After final cleanup, use `commit-message-v1.0.0.txt` for stable promotion.
+6. Create the annotated stable tag from `tag-message-v1.0.0.txt`.
 
-The checkpoint has no tag-message template because it is intentionally not a release.
+Development and stabilization checkpoints have no tag-message templates because they are intentionally not releases.
 
 ## Local validation
 

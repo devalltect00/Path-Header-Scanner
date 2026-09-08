@@ -5,8 +5,8 @@ name: 🐋 Docker Production Image
 run-name: 🐋 Production Docker Build • ${{ inputs.tag || github.ref_name }}
 
 # Production images are release artifacts. They are built only from existing,
-# non-empty annotated SemVer tags. Stable tags update `latest`; prerelease
-# tags publish only their exact version.
+# non-empty annotated SemVer tags. Stable tags update the matching major,
+# minor, and `latest` aliases; prerelease tags publish only their exact version.
 
 on:
   push:
@@ -49,8 +49,9 @@ jobs:
           python -m pip install --disable-pip-version-check packaging
 
           TAG_REGEX='^v[0-9]+\.[0-9]+\.[0-9]+([.-](alpha|beta|rc|dev|post)\.[0-9]+)?(\+[0-9A-Za-z.]+)?$'
-          STABLE_TAG_REGEX='^v[0-9]+\.[0-9]+\.[0-9]+(\+[0-9A-Za-z.]+)?$'
+          STABLE_TAG_REGEX='^v[0-9]+\.[0-9]+\.[0-9]+$'
           TAG="$RELEASE_TAG"
+          PUBLISH_ALIASES=false
           PUBLISH_LATEST=false
 
           if [[ ! "$TAG" =~ $TAG_REGEX ]]; then
@@ -83,14 +84,21 @@ jobs:
           fi
 
           if [[ "$TAG" =~ $STABLE_TAG_REGEX ]]; then
+            PUBLISH_ALIASES=true
             PUBLISH_LATEST=true
           fi
 
           IMAGE_TAG="${TAG//+/-}"
+          VERSION_CORE="${TAG#v}"
+          VERSION_CORE="${VERSION_CORE%%+*}"
+          IFS='.' read -r MAJOR MINOR _ <<< "$VERSION_CORE"
 
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "image_tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "major=$MAJOR" >> "$GITHUB_OUTPUT"
+          echo "minor=$MINOR" >> "$GITHUB_OUTPUT"
+          echo "publish_aliases=$PUBLISH_ALIASES" >> "$GITHUB_OUTPUT"
           echo "publish_latest=$PUBLISH_LATEST" >> "$GITHUB_OUTPUT"
 
       - name: 🐳 Set up Docker Buildx
@@ -117,6 +125,8 @@ jobs:
             ghcr.io/${{ steps.vars.outputs.image_name }}
           tags: |
             type=raw,value=${{ steps.version.outputs.image_tag }}
+            type=raw,value=v${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }},enable=${{ steps.version.outputs.publish_aliases }}
+            type=raw,value=v${{ steps.version.outputs.major }},enable=${{ steps.version.outputs.publish_aliases }}
             type=raw,value=latest,enable=${{ steps.version.outputs.publish_latest }}
 
       - name: 🏗️ Build and push production image

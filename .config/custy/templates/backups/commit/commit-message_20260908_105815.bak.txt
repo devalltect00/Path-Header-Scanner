@@ -1,0 +1,33 @@
+ci(release): prepare stable Docker version aliases
+
+Prepare Path Header Scanner's production image workflows for the stable
+`v1.0.0` release after the published `v1.0.0-rc.1` validation boundary.
+
+### 🐋 Stable image aliases
+
+- Publish one stable image under the exact `v1.0.0` tag and the coordinated
+  `v1.0`, `v1`, and `latest` aliases on GitHub and GitLab.
+- Keep prereleases exact-only so candidate images cannot move stable aliases.
+- Derive major and minor aliases from the validated release tag and keep all
+  aliases attached to the same built image.
+- Apply the same stable-versus-prerelease alias classification on GitHub and
+  GitLab while preserving the package gate's rejection of build metadata.
+
+### 🧪 Regression protection and documentation
+
+- Add structural workflow tests for alias generation, provider parity, and
+  prerelease isolation.
+- Document immutable exact tags, moving minor and major aliases, and the
+  stable-only `latest` policy in repository and public documentation.
+- Preserve the existing annotated-tag, package-version, protected-publication,
+  and provider-registry safeguards.
+
+Release phase: post-RC stabilization
+Tag: none
+Previous release: v1.0.0-rc.1
+Target release: v1.0.0
+
+🔖 **Tags**:
+- Type: `#ci`, `#release`
+- Delivery: `#docker`, `#github-actions`, `#gitlab-ci`
+- Scope: `#stable-aliases`, `#regression-tests`, `#documentation`
