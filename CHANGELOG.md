@@ -14,8 +14,12 @@ Unreleased
 
 **Summary**
 
-Prepare Path Header Scanner's production image workflows for the stable
-`v1.0.0` release after the published `v1.0.0-rc.1` validation boundary.
+Promote Path Header Scanner from `v1.0.0-rc.1` to the first stable `v1.0.0`
+release after release-candidate validation.
+
+This commit finalizes the initial production baseline for preview-first path
+header discovery, validation, insertion, and updating across supported source
+and documentation languages.
 
 ### Stable Image Aliases
 
@@ -30,9 +34,48 @@ Prepare Path Header Scanner's production image workflows for the stable
 - Document immutable exact tags, moving minor and major aliases, and the
 - Preserve the existing annotated-tag, package-version, protected-publication,
 
+### 🚀 Releases
+
+- Carry forward checkpoint 1's application foundation, general CI/CD,
+- Carry forward checkpoint 2's private GitLab Python distribution and
+- Carry forward checkpoint 3's source-checkout maintenance helper without
+- Carry forward checkpoint 4's safe GitHub release-note rendering, populated
+- Carry forward the post-RC stabilization checkpoint's exact, minor, major,
+- Promote the combined result reviewed in RC.1; this stable commit owns only
+- Apply final repository cleanup and remove temporary development artifacts that are not part of the supported product.
+- Incorporate release-blocking fixes and documentation corrections identified during RC validation.
+- Review package metadata, generated configuration, command help, CI/CD definitions, documentation, and container destinations.
+- Re-run the approved tests, coverage, lint, formatting, documentation, packaging, CLI, Make, Docker, Compose, and dry-run checks.
+- Preserve completed development history and remaining future work in project tracking documentation.
+
+### Stable Promotion
+
+- Carry forward the complete scanner, updater, language-strategy, configuration, initialization, UI, logging, tooling, test, and documentation set validated in RC.1.
+- Keep centralized init and scan error boundaries, actionable expected failures, hidden normal-mode tracebacks, and reliable nonzero exits.
+- Keep scan preview as the default and require explicit `--apply` for file changes.
+- Keep `--dry-run` authoritative over CLI or configured apply mode.
+- Keep `.config/path_header_scanner/config.toml` as the supported project configuration location.
+- Keep Python 3.11+ package compatibility and Python 3.14 as the standard development and container runtime.
+- Keep dynamic provider registry destinations, annotated-tag and package-version validation, exact prerelease images, stable-only major, minor, and `latest` aliases, full tag-message release notes, and root multi-stage Docker builds established for RC.1 and finalized after RC validation.
+- Prepare the repository for its first stable SemVer tag and public release publication.
+
+### Stable Private Package
+
+- Promote the private GitLab PyPI distribution from the validated RC package
+- Preserve protected-tag publication, canonical PEP 440 metadata, wheel and
+- Keep unprotected tags validation-only so temporary tag pipelines do not
+
+### Repository Maintenance Tooling
+
+- Carry forward the optional source-checkout metadata helper introduced in
+- Keep repository description and provider topics independently maintainable
+- Keep this helper outside the installed application command surface and
+- Retain the README and cumulative TODO updates without presenting a
+- Review the helper follow-ups recorded in the TODO history before release;
+
 **Tags**
 
-docs • stable-aliases • regression-tests • documentation
+release • docs • repository-cleanup • release-validation • documentation
 
 ## v1.0.0-rc.1 (2026-09-06)
 

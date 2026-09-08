@@ -1,0 +1,86 @@
+release(main): promote Path Header Scanner v1.0.0
+
+Promote Path Header Scanner from `v1.0.0-rc.1` to the first stable `v1.0.0`
+release after release-candidate validation.
+
+This commit finalizes the initial production baseline for preview-first path
+header discovery, validation, insertion, and updating across supported source
+and documentation languages.
+
+### 🧭 Release lineage
+
+- Carry forward checkpoint 1's application foundation, general CI/CD,
+  compatibility, build tooling, tests, and documentation.
+- Carry forward checkpoint 2's private GitLab Python distribution and
+  package-publication safeguards.
+- Carry forward checkpoint 3's source-checkout maintenance helper without
+  presenting it as an installed CLI feature.
+- Carry forward checkpoint 4's safe GitHub release-note rendering, populated
+  metadata, literal Docker examples, and regression protection.
+- Carry forward the post-RC stabilization checkpoint's exact, minor, major,
+  and `latest` stable image aliases with prerelease isolation.
+- Promote the combined result reviewed in RC.1; this stable commit owns only
+  final cleanup, reviewed corrections, and release validation.
+
+### 🧹 Release finalization
+
+- Apply final repository cleanup and remove temporary development artifacts that are not part of the supported product.
+- Incorporate release-blocking fixes and documentation corrections identified during RC validation.
+- Review package metadata, generated configuration, command help, CI/CD definitions, documentation, and container destinations.
+- Re-run the approved tests, coverage, lint, formatting, documentation, packaging, CLI, Make, Docker, Compose, and dry-run checks.
+- Preserve completed development history and remaining future work in project tracking documentation.
+
+### ✅ Stable promotion
+
+- Carry forward the complete scanner, updater, language-strategy, configuration, initialization, UI, logging, tooling, test, and documentation set validated in RC.1.
+- Keep centralized init and scan error boundaries, actionable expected failures, hidden normal-mode tracebacks, and reliable nonzero exits.
+- Keep scan preview as the default and require explicit `--apply` for file changes.
+- Keep `--dry-run` authoritative over CLI or configured apply mode.
+- Keep `.config/path_header_scanner/config.toml` as the supported project configuration location.
+- Keep Python 3.11+ package compatibility and Python 3.14 as the standard development and container runtime.
+- Keep dynamic provider registry destinations, annotated-tag and package-version validation, exact prerelease images, stable-only major, minor, and `latest` aliases, full tag-message release notes, and root multi-stage Docker builds established for RC.1 and finalized after RC validation.
+- Prepare the repository for its first stable SemVer tag and public release publication.
+
+### 📦 Stable private package
+
+- Promote the private GitLab PyPI distribution from the validated RC package
+  to immutable `path-header-scanner==1.0.0` artifacts.
+- Preserve protected-tag publication, canonical PEP 440 metadata, wheel and
+  source-distribution checks, and deploy-token installation guidance.
+- Keep unprotected tags validation-only so temporary tag pipelines do not
+  publish packages, production images, or provider releases.
+
+### 📦 Release scope
+
+Path Header Scanner 1.0 establishes the project's first supported production
+contract: deterministic target resolution, language-aware path headers,
+preview-first scanning, explicit application, safe dry-run behavior, Rich CLI
+guidance, namespaced configuration, layered internals, automated tests,
+documentation, modular Make workflows, containers, and CI/CD support.
+
+### 🧰 Repository maintenance tooling
+
+- Carry forward the optional source-checkout metadata helper introduced in
+  untagged checkpoint 3 (`commit-message-v1.0.0-development-checkpoint-3.txt`).
+- Keep repository description and provider topics independently maintainable
+  in `pyproject.toml`, with preview-first usage and explicit warnings about
+  replacement, empty-topic clearing, and live provider updates.
+- Keep this helper outside the installed application command surface and
+  automated release/publication flow; it is maintainer tooling, not a new
+  end-user CLI feature.
+- Retain the README and cumulative TODO updates without presenting a
+  development checkpoint as a tagged release.
+- Review the helper follow-ups recorded in the TODO history before release;
+  this note does not assert that live synchronization has been validated.
+
+Tag: v1.0.0
+Previous release: v1.0.0-rc.1
+Previous stable release: none
+Release lineage: pre-RC checkpoints 1–4 → first RC v1.0.0-rc.1 → post-RC stabilization → first stable v1.0.0
+Changelog: generated separately
+
+🔖 **Tags**:
+- Type: `#release`, `#maintenance`
+- Delivery: `#stable`, `#semver`, `#first-release`
+- Scope: `#repository-cleanup`, `#release-validation`, `#documentation`
+- Product: `#path-header`, `#scanner`, `#dry-run`, `#developer-tool`

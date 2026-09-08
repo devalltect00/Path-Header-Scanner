@@ -1,11 +1,11 @@
 # TODO
 
-> Cumulative snapshot for **v1.0.0-rc.1**. Earlier tasks, unfinished work,
+> Cumulative snapshot for **v1.0.0**. Earlier tasks, unfinished work,
 > considerations, ideas, cancelled items, and notes are intentionally retained.
 
-# Path Header Scanner TODO Tracking History — v1.0.0-rc.1
+# Path Header Scanner TODO Tracking History — v1.0.0
 
-> Current status: see the [2026-09-06 checkpoint update](#checkpoint-4-2026-09-06).
+> Current status: see the [2026-09-08 post-RC stabilization update](#stabilization-checkpoint-2026-09-08).
 > Older checkboxes, test counts, plans, and decisions are preserved as recorded;
 > they are historical context, not proof that every current release gate passed.
 
@@ -148,17 +148,6 @@ Personal planning and roadmap for **Path Header Scanner**.
 
 ### RC validation checklist
 
-#### CI/CD release safeguards completed for RC.1
-
-- [x] Validate Python 3.11 and 3.14 in hosted CI.
-- [x] Derive GHCR destinations from the active repository and use GitLab's project registry destination.
-- [x] Build from the root multi-stage Dockerfile with explicit development or production targets.
-- [x] Require a non-empty annotated SemVer tag before production image or provider-release publication.
-- [x] Publish exact prerelease tags without updating `latest`; reserve `latest` for stable releases.
-- [x] Preserve full annotated tag messages as provider release notes and attach package artifacts.
-- [x] Pin Ruff and Black consistently and add workflow-contract regression tests.
-- [x] Keep the comprehensive product commit as an untagged checkpoint and reserve the RC.1 tag for CI/CD finalization.
-
 - [ ] Install RC.1 in an isolated environment and validate root and command help.
 - [ ] Preview and perform initialization in a disposable repository.
 - [ ] Scan representative files for every supported language in preview mode.
@@ -182,6 +171,80 @@ Personal planning and roadmap for **Path Header Scanner**.
   production release to migrate from.
 - This snapshot does not claim that a tag, package, image, or release has been
   published.
+
+---
+
+## Since v1.0.0
+
+### Version context
+
+| Field                   | Value                                                        |
+| ----------------------- | ------------------------------------------------------------ |
+| Version                 | `v1.0.0`                                                     |
+| Previous version        | `v1.0.0-rc.1`                                                |
+| Previous stable version | None                                                         |
+| Release type            | First stable production release                              |
+| Version strategy        | Semantic Versioning                                          |
+| Promotion rule          | Carry forward the validated RC.1 safety and command contract |
+
+### Stable feature baseline
+
+#### CI/CD baseline promoted from RC.1
+
+- [x] Carry forward the Python 3.11 and 3.14 CI matrix.
+- [x] Carry forward dynamic registry naming, annotated-tag validation, exact prerelease images, and stable-only `latest`.
+- [x] Carry forward full tag-message release notes, package artifacts, and root multi-stage Docker builds.
+- [ ] Re-run hosted-workflow-equivalent checks after final cleanup and before creating `v1.0.0`.
+
+- [x] Carry forward recursive, language-aware path-header discovery and validation.
+- [x] Carry forward preview-first scanning and explicit `--apply` mutation control.
+- [x] Carry forward Python, JavaScript, TypeScript, Shell, PHP, HTML, and Markdown strategies.
+- [x] Carry forward deterministic repository-relative paths and configurable ignore rules.
+- [x] Carry forward safe initialization and namespaced `.config/path_header_scanner/config.toml` configuration.
+- [x] Carry forward authoritative dry-run behavior over CLI and configured apply modes.
+- [x] Carry forward Rich help, progress, summaries, logging, actionable failures, and debug diagnostics.
+- [x] Carry forward the modular architecture, tests, documentation, Make, Docker, Compose, packaging, and CI/CD workflows.
+
+### Stable-release finalization
+
+- [ ] Incorporate only release-blocking fixes and documentation corrections identified during RC validation.
+- [ ] Remove temporary development artifacts that are not part of the supported product.
+- [ ] Review package metadata, generated configuration, command help, CI/CD, docs, and container destinations.
+- [ ] Confirm preview mode remains the default and `--apply` is the only supported write opt-in.
+- [ ] Confirm dry-run stops all target-project mutations.
+- [ ] Preserve the completed development history and remaining future work in project tracking documentation.
+
+### Stable validation checklist
+
+- [ ] Run the complete approved tests and coverage suite.
+- [ ] Run Ruff, Black, pre-commit, packaging, and documentation validation.
+- [ ] Validate initialization and scan help locally and in production containers.
+- [ ] Validate preview, apply, and dry-run in disposable multi-language repositories.
+- [ ] Validate Make and Docker Compose development and production workflows.
+- [ ] Review generated headers for path correctness and language-appropriate syntax.
+- [ ] Commit and create the `v1.0.0` tag only with explicit release approval.
+- [ ] Verify release artifacts, packages, container images, and documentation after publication.
+
+### Stable support boundaries
+
+- [x] Scan targets are processed one resolved target at a time.
+- [x] Unsupported file types are reported or skipped rather than mutated.
+- [x] Diagnostic logging may write during dry-run, but target-project files may not.
+- [x] Generated configuration is project-owned after initialization.
+- [x] Python 3.11+ is the package compatibility floor; Python 3.14 is the standard development and container runtime.
+
+### Future work
+
+- [ ] Evaluate multiple-target scans without weakening path determinism or write safety.
+- [ ] Improve progress detail for very large targets when measurements justify it.
+- [ ] Add new language strategies through the existing extension boundary and full preview/apply tests.
+- [ ] Review and intentionally refresh pre-commit hook versions and Python targets.
+
+### Notes
+
+- Stable 1.0 should be a promotion of reviewed RC.1 behavior, not an unreviewed
+  expansion of the command or mutation model.
+- Unchecked release operations remain pending until explicitly authorized.
 
 ---
 
@@ -249,7 +312,7 @@ the implementation state without modifying the original TODO file.
 
 ## 🧾 Notes
 
-### Path Header Scanner TODO Tracking History — v1.0.0-rc.1.md
+### Path Header Scanner TODO Tracking History — v1.0.0.md
 
 Keep this file concise, status-driven, and updated during each milestone.
 
@@ -259,7 +322,7 @@ Keep this file concise, status-driven, and updated during each milestone.
 
 ## 2026-09-02 status update — untagged checkpoint 3
 
-Version scope: **v1.0.0-rc.1**.
+Version scope: **v1.0.0, carrying forward v1.0.0-rc.1 preparation**.
 The [checkpoint commit message](../.config/custy/templates/commit-message-v1.0.0-development-checkpoint-3.txt)
 has **no associated tag or tag message**. Earlier checkpoint files remain unchanged.
 
@@ -316,7 +379,7 @@ remaining scanner and multi-target ideas are retained.
 
 ## 2026-09-06 status update — untagged checkpoint 4
 
-Version scope: **v1.0.0-rc.1**.
+Version scope: **v1.0.0, carrying forward v1.0.0-rc.1 preparation**.
 The [checkpoint commit message](../.config/custy/templates/commit-message-v1.0.0-development-checkpoint-4.txt)
 has **no associated tag or tag message**. It becomes part of the cumulative
 RC.1 and stable release history.
@@ -344,3 +407,38 @@ RC.1 and stable release history.
 - [Checkpoint 4 commit message](../.config/custy/templates/commit-message-v1.0.0-development-checkpoint-4.txt) records the internal implementation details.
 - The cumulative RC.1 and v1.0.0 commit and tag messages include checkpoint 4; this checkpoint itself remains untagged.
 - No existing history, plans, ideas, cancelled work, or earlier checkpoint evidence was removed.
+
+<a id="stabilization-checkpoint-2026-09-08"></a>
+
+## 2026-09-08 status update — post-RC stabilization checkpoint
+
+Version scope: **between published v1.0.0-rc.1 and planned stable v1.0.0**.
+The [stabilization commit message](../.config/custy/templates/commit-message-v1.0.0-stabilization-checkpoint.txt)
+has **no associated tag or tag message**. It is separate from pre-RC
+development checkpoints 1–4.
+
+### ✅ Stable container aliases
+
+- [x] Publish stable images under the exact, minor, major, and `latest` tags.
+- [x] Keep prerelease images exact-only so they cannot move stable aliases.
+- [x] Keep GitHub and GitLab alias behavior aligned with the package gate's build-metadata rejection.
+- [x] Add structural regression coverage for alias creation and prerelease isolation.
+- [x] Update repository and public Docker guidance with immutable and moving-tag semantics.
+
+### ✅ Local validation recorded
+
+- [x] Complete Path Header Scanner suite: 127 tests passed with 84% overall coverage.
+- [x] Targeted Ruff and Black checks passed for the modified regression test.
+- [x] GitHub and GitLab production workflow YAML parsed successfully.
+
+### ⏳ Remaining stable-release validation
+
+- [ ] Validate hosted workflows with the reviewed `v1.0.0` tag only after explicit release approval.
+- [ ] Confirm `v1.0.0`, `v1.0`, `v1`, and `latest` resolve to the same image digest on each enabled registry.
+- [ ] Complete final cleanup and the broader stable-release checklist before publication.
+
+### Notes
+
+- The exact `v1.0.0` image tag is the recommended reproducible automation pin.
+- `v1.0`, `v1`, and `latest` are intentionally moving aliases advanced only by stable releases.
+- The published RC.1 records and pre-RC checkpoint history remain unchanged.
