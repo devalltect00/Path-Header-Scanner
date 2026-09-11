@@ -116,7 +116,7 @@ pip install git+https://github.com/devalltect00/Path-Header-Scanner.git
 Specific tag:
 
 ```bash
-pip install git+https://github.com/devalltect00/Path-Header-Scanner.git@v1.0.0
+pip install git+https://github.com/devalltect00/Path-Header-Scanner.git@v1.0.1
 ```
 
 ---
@@ -132,7 +132,7 @@ pip install git+https://gitlab.com/devalltects-group/path-header-scanner.git
 Specific tag:
 
 ```bash
-pip install git+https://gitlab.com/devalltects-group/path-header-scanner.git@v1.0.0
+pip install git+https://gitlab.com/devalltects-group/path-header-scanner.git@v1.0.1
 ```
 
 ---
@@ -155,13 +155,13 @@ dist/
 Install wheel:
 
 ```bash
-pip install path_header_scanner-1.0.0-py3-none-any.whl
+pip install path_header_scanner-1.0.1-py3-none-any.whl
 ```
 
 Install source distribution:
 
 ```bash
-pip install path_header_scanner-1.0.0.tar.gz
+pip install path_header_scanner-1.0.1.tar.gz
 ```
 
 ---

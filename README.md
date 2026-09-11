@@ -47,7 +47,7 @@ Designed for:
 | Property                     | Value                                         |
 | ---------------------------- | --------------------------------------------- |
 | Project                      | Path Header Scanner                           |
-| Current version              | `v1.0.0`                                      |
+| Current version              | `v1.0.1`                                      |
 | Python package               | `path-header-scanner`                         |
 | Package compatibility        | Python 3.11+                                  |
 | Standard development runtime | Python 3.14                                   |

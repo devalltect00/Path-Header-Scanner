@@ -636,7 +636,7 @@ make docker-apply
 - Docker Compose simplifies team onboarding and CI workflows.
 
 Stable production releases publish four coordinated references to the same
-image: exact `v1.0.0`, minor `v1.0`, major `v1`, and `latest`. Pin CI and
+image: exact `v1.0.1`, minor `v1.0`, major `v1`, and `latest`. Pin CI and
 reproducible automation to the immutable exact tag. The other aliases move only
 when a compatible stable release is published. Prereleases such as
 `v1.0.0-rc.1` publish only their exact tag.

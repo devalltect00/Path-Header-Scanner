@@ -49,7 +49,7 @@ Use a deploy token with `read_package_registry` permission:
 ```bash
 python -m pip install \
   --index-url "https://<deploy-token-user>:<deploy-token>@gitlab.com/api/v4/projects/<project-id>/packages/pypi/simple" \
-  "path-header-scanner==1.0.0"
+  "path-header-scanner==1.0.1"
 ```
 
 For a release-candidate tag such as `v1.0.0-rc.1`, install the normalized

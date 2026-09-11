@@ -14,20 +14,31 @@ Unreleased
 
 **Summary**
 
-Keep the supported dedicated development and production Python environment
-naming conventions out of Path Header Scanner's repository tooling and
-recursive source-file discovery.
+Consolidate the reviewed repository-maintenance and presentation checkpoints
+since v1.0.0 into the first patch release.
 
-### 🧠 Improvements
+### Readme Presentation
 
-#### Readme
+#### Project
 
-- Add a clearer product title and consistent icons to the main sections.
-- Add concise metadata for the current version, supported Python versions,
-- Add the project contact and Devalltect maintainer footer.
-- Preserve the existing installation, usage, safety, Docker, Make, and
+- Add the Path Header Scanner CLI preview near the top of the README.
+- Store the preview locally so it renders independently on GitHub and GitLab.
+- Preserve the existing badges, project overview, safety guidance, and usage
+
+### Official Project Contact
+
+#### Project
+
+- Replace the previous contact address with the official Devalltect address in
+- Update both author and maintainer email metadata for future Python package
+- Leave existing releases, package artifacts, tags, and Git history unchanged.
 
 ### Validation
+
+#### Project
+
+- Confirm the previous email has no current working-tree references.
+- Validate the project metadata, README asset path, formatting, and Git diff.
 
 #### Readme
 
@@ -51,9 +62,30 @@ recursive source-file discovery.
 - Confirm normal project source files remain discoverable.
 - Run the focused tests and repository quality checks.
 
+### 🧠 Improvements
+
+#### Readme
+
+- Add a clearer product title and consistent icons to the main sections.
+- Add concise metadata for the current version, supported Python versions,
+- Add the project contact and Devalltect maintainer footer.
+- Preserve the existing installation, usage, safety, Docker, Make, and
+
+### 📚 Documentation
+
+- Refine README metadata and project presentation.
+- Add a locally stored CLI preview that renders on GitHub and GitLab.
+- Standardize the public project contact in README and package metadata.
+- Align source and package fallback versions, the stable package classifier,
+- Synchronize the generated project-structure reference.
+
+### Compatibility
+
+- Preserve preview-first scanning, explicit apply behavior, dry-run safety, and
+
 **Tags**
 
-dev • virtual-environment • scanner • dockerignore • quality
+docs
 
 ## v1.0.0 (2026-09-08)
 

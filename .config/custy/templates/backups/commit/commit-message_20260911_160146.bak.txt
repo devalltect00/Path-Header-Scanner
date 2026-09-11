@@ -1,0 +1,32 @@
+chore(release): prepare Path Header Scanner v1.0.1
+
+Consolidate the reviewed repository-maintenance and presentation checkpoints
+since v1.0.0 into the first patch release.
+
+### Maintenance
+
+- Exclude supported named virtual-environment directories from recursive
+  scanning, version control, container contexts, and quality-tool inputs.
+- Add regression coverage for scanner exclusions and developer-tooling rules.
+- Preserve discovery of normal project source directories.
+
+### Documentation and metadata
+
+- Refine README metadata and project presentation.
+- Add a locally stored CLI preview that renders on GitHub and GitLab.
+- Standardize the public project contact in README and package metadata.
+- Align source and package fallback versions, the stable package classifier,
+  and active installation and Docker references with v1.0.1.
+- Synchronize the generated project-structure reference.
+
+### Compatibility
+
+- Preserve preview-first scanning, explicit apply behavior, dry-run safety, and
+  Python 3.11+ package compatibility.
+
+Tag: v1.0.1
+Previous version: v1.0.0
+Release type: patch
+Changelog: generated separately
+
+Tags: #release #maintenance #scanner #readme #metadata #path-header-scanner

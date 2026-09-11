@@ -1,11 +1,11 @@
 # TODO
 
-> Cumulative snapshot for **v1.0.0**. Earlier tasks, unfinished work,
+> Cumulative snapshot for **v1.0.1**. Earlier tasks, unfinished work,
 > considerations, ideas, cancelled items, and notes are intentionally retained.
 
-# Path Header Scanner TODO Tracking History — v1.0.0
+# Path Header Scanner TODO Tracking History — v1.0.1
 
-> Current status: see the [2026-09-08 post-RC stabilization update](#stabilization-checkpoint-2026-09-08).
+> Current status: see the [v1.0.1 patch-release preparation](#v101-patch-release).
 > Older checkboxes, test counts, plans, and decisions are preserved as recorded;
 > they are historical context, not proof that every current release gate passed.
 
@@ -442,3 +442,38 @@ development checkpoints 1–4.
 - The exact `v1.0.0` image tag is the recommended reproducible automation pin.
 - `v1.0`, `v1`, and `latest` are intentionally moving aliases advanced only by stable releases.
 - The published RC.1 records and pre-RC checkpoint history remain unchanged.
+
+---
+
+<a id="v101-patch-release"></a>
+
+## Since v1.0.1
+
+Version scope: **v1.0.1 patch release**, following published v1.0.0.
+
+### ✅ Repository maintenance
+
+- [x] Exclude supported development, production, publishing, and auxiliary virtual-environment directory names from recursive scans.
+- [x] Align Git, Docker, formatter, and linter exclusions with the same environment-directory contract.
+- [x] Preserve discovery of similarly named ordinary project directories.
+- [x] Add regression coverage for scanner and repository-tooling exclusions.
+
+### ✅ Documentation, metadata, and versioning
+
+- [x] Refine README metadata and project presentation.
+- [x] Add a repository-local CLI preview that renders on GitHub and GitLab.
+- [x] Standardize the public project contact in README and package metadata without recording private contact details in release messages.
+- [x] Synchronize the source fallback, package fallback metadata, installation examples, Docker guidance, and release messages with v1.0.1.
+- [x] Regenerate the project-structure reference for the maintained repository layout.
+
+### ⏳ Final release actions
+
+- [ ] Re-run the complete Python 3.11 and 3.14 test matrix, formatting, lint, pre-commit, documentation, package, and container checks against the exact release commit.
+- [ ] Review the v1.0.1 commit message, annotated tag message, generated changelog, and registry destinations.
+- [ ] Commit, create the `v1.0.1` tag, publish, and verify provider releases only with explicit release approval.
+
+### Notes
+
+- v1.0.1 preserves preview-first scanning, explicit apply behavior, configuration, and dry-run safety.
+- Historical release sections and versioned TODO snapshots remain unchanged.
+- No Git commit, tag, push, package publication, image publication, or provider release was performed while preparing this entry.

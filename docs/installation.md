@@ -29,7 +29,7 @@ pip install git+https://github.com/devalltect00/Path-Header-Scanner.git
 Install a specific tag:
 
 ```bash
-pip install git+https://github.com/devalltect00/Path-Header-Scanner.git@v1.0.0
+pip install git+https://github.com/devalltect00/Path-Header-Scanner.git@v1.0.1
 ```
 
 Install a specific branch:
@@ -51,7 +51,7 @@ pip install git+https://gitlab.com/devalltects-group/path-header-scanner.git
 Install a specific tag:
 
 ```bash
-pip install git+https://gitlab.com/devalltects-group/path-header-scanner.git@v1.0.0
+pip install git+https://gitlab.com/devalltects-group/path-header-scanner.git@v1.0.1
 ```
 
 Install a specific branch:
