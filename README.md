@@ -1,6 +1,6 @@
 <!-- README.md -->
 
-# Path Header Scanner
+# 🧭 Path Header Scanner — Safe Repository Path Header Automation
 
 ![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 ![Tag](https://img.shields.io/github/v/tag/devalltect00/Path-Header-Scanner)
@@ -38,7 +38,25 @@ Designed for:
 
 ---
 
-## Features
+## ℹ️ Project Metadata
+
+| Property                     | Value                                         |
+| ---------------------------- | --------------------------------------------- |
+| Project                      | Path Header Scanner                           |
+| Current version              | `v1.0.0`                                      |
+| Python package               | `path-header-scanner`                         |
+| Package compatibility        | Python 3.11+                                  |
+| Standard development runtime | Python 3.14                                   |
+| CLI framework                | Typer and Rich                                |
+| Version strategy             | SemVer tags and PEP 440 package versions      |
+| Distribution                 | Source, private GitLab PyPI, Docker, and GHCR |
+| Documentation                | Devalltect Docs and repository documentation  |
+| License                      | MIT                                           |
+| Maintainer                   | Devalltect / Rizky Fernandes                  |
+
+---
+
+## ✨ Features
 
 - Recursive directory scanning
 - Automatic path header generation
@@ -58,7 +76,7 @@ Designed for:
 
 ---
 
-## Example
+## 🔍 Example
 
 Before:
 
@@ -84,12 +102,12 @@ Markdown example:
 
 ---
 
-## Installation
+## 📦 Installation
 
 Runtime compatibility is Python 3.11+; the standard development and container
 runtime is Python 3.14.
 
-### Install a private GitLab package
+### 🔐 Install a private GitLab package
 
 Choose a version already published in the target project's registry. In an
 activated virtual environment, replace the placeholders:
@@ -110,7 +128,7 @@ if dependencies must stay private.
 See [installation and registry guidance](docs/user-guide/installation-methods.md) for authentication,
 other installation methods, and registry setup.
 
-### Install from a source checkout
+### 🧑‍💻 Install from a source checkout
 
 Create and activate a virtual environment in the source checkout, then run:
 
@@ -124,7 +142,7 @@ For contributor tooling and pre-commit setup, follow the
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Local
 
@@ -156,7 +174,7 @@ path-header-scanner scan app --apply --dry-run
 
 ---
 
-## Docker
+## 🐋 Docker
 
 From the source checkout, build the production image using the project helper:
 
@@ -190,7 +208,7 @@ docker run -it --rm \
 
 ---
 
-## Makefile Commands
+## 🛠️ Makefile Commands
 
 Display the grouped command reference:
 
@@ -221,7 +239,7 @@ for local, Docker, Compose, and published-image workflows.
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 app/
@@ -242,7 +260,7 @@ See full structure in [`project_structure.md`](docs/project_structure.md).
 
 ---
 
-## Supported Languages
+## 🌐 Supported Languages
 
 | Language                | Extensions                   |
 | ----------------------- | ---------------------------- |
@@ -257,7 +275,7 @@ See full documentation in [`supported_languages.md`](docs/project/languages/supp
 
 ---
 
-## Documentation
+## 📖 Documentation
 
 ### User Documentation
 
@@ -283,7 +301,7 @@ See full documentation in [`supported_languages.md`](docs/project/languages/supp
 
 ---
 
-## Repository metadata helper (maintainers)
+## ⚙️ Repository Metadata Helper (Maintainers)
 
 The optional [metadata sync script](scripts/repository/src/sync_metadata.py)
 is source-checkout tooling, not an installed application command. Run it from
@@ -320,26 +338,26 @@ These issues and isolated test coverage are tracked in the
 
 ---
 
-## Changelog
+## 📃 Changelog
 
 `CHANGELOG.md` is prepared during the reviewed release process. For current
 development milestones, see the [TODO tracking history](docs/TODO_tracking_history.md).
 
 ---
 
-## Security
+## 🔐 Security
 
 See [`SECURITY.md`](SECURITY.md)
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
 ---
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License.
 
@@ -347,10 +365,16 @@ See [`LICENSE`](LICENSE)
 
 ---
 
-## Notes
+## 📝 Notes
 
 - Paths use POSIX-style separators.
 - Docker workflows support mounted workspaces.
 - Markdown headers use HTML comments intentionally.
 - Existing special lines are preserved safely.
 - File updates preserve trailing newlines.
+
+📧 Contact: `rizkypffdev37@gmail.com`
+
+---
+
+_Handcrafted with ❤️ by Devalltect / Rizky Fernandes_
