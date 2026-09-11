@@ -175,4 +175,31 @@ def test_ignore_files_cover_local_test_workspaces() -> None:
         assert ".pytest-tmp-*/" in text
         assert "\n/build/\n" in text
 
+    for ignore_file in (".gitignore", ".dockerignore", ".prettierignore"):
+        text = _read(ignore_file)
+        for environment_name in (
+            "dev_venv",
+            "prod_venv",
+            "venv_dev",
+            "venv_prod",
+            "publish_venv",
+            "venv_publish",
+            "other_venv",
+            "venv_other",
+        ):
+            assert f"{environment_name}/" in text
+
+    pyproject = _read("pyproject.toml")
+    for environment_name in (
+        "dev_venv",
+        "prod_venv",
+        "venv_dev",
+        "venv_prod",
+        "publish_venv",
+        "venv_publish",
+        "other_venv",
+        "venv_other",
+    ):
+        assert pyproject.count(environment_name) >= 2
+
     assert ".config/path_header_scanner/config.toml" in _read(".dockerignore")

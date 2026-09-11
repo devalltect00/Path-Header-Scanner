@@ -1,24 +1,27 @@
-docs(readme): improve project presentation and metadata
+chore(dev): checkpoint isolate named virtual environments
 
-Polish the Path Header Scanner README so its project identity and supporting
-information are easier to scan and consistent with the wider Devalltect
-project family.
+Keep the supported dedicated development and production Python environment
+naming conventions out of Path Header Scanner's repository tooling and
+recursive source-file discovery.
 
-### 📚 README improvements
+### 🧰 Development environment isolation
 
-- Add a clearer product title and consistent icons to the main sections.
-- Add concise metadata for the current version, supported Python versions,
-  packaging, distribution channels, documentation, license, and maintainer.
-- Add the project contact and Devalltect maintainer footer.
-- Preserve the existing installation, usage, safety, Docker, Make, and
-  contributor guidance.
+- Ignore root-level `dev_venv/`, `prod_venv/`, `venv_dev/`, `venv_prod/`,
+  `publish_venv/`, `venv_publish/`, `other_venv/`, and `venv_other/`
+  directories in Git.
+- Exclude all eight names from Docker, Prettier, Black, and Ruff inputs.
+- Add all eight names to the scanner's default ignored-directory contract.
+- Extend scanner and developer-workflow regression coverage.
 
-### ✅ Validation
+### ✅ Validation intent
 
-- Pass the repository pre-commit hooks for the updated README.
-- Pass Git whitespace and patch-integrity validation.
+- Confirm supported files inside both environments are never scanned.
+- Confirm normal project source files remain discoverable.
+- Run the focused tests and repository quality checks.
+
+Checkpoint: untagged development maintenance
 
 🔖 **Tags**:
-- Type: `#docs`, `#maintenance`
-- Scope: `#readme`, `#metadata`, `#presentation`
-- Product: `#path-header-scanner`, `#developer-tool`
+- Type: `#chore`, `#maintenance`
+- Scope: `#virtual-environment`, `#scanner`, `#dockerignore`, `#quality`
+- Product: `#path-header-scanner`, `#developer-experience`

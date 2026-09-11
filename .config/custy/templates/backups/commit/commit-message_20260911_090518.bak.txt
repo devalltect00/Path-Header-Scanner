@@ -1,0 +1,27 @@
+chore(dev): checkpoint isolate named virtual environments
+
+Keep the supported dedicated development and production Python environment
+naming conventions out of Path Header Scanner's repository tooling and
+recursive source-file discovery.
+
+### 🧰 Development environment isolation
+
+- Ignore root-level `dev_venv/`, `prod_venv/`, `venv_dev/`, `venv_prod/`,
+  `publish_venv/`, `venv_publish/`, `other_venv/`, and `venv_other/`
+  directories in Git.
+- Exclude all eight names from Docker, Prettier, Black, and Ruff inputs.
+- Add all eight names to the scanner's default ignored-directory contract.
+- Extend scanner and developer-workflow regression coverage.
+
+### ✅ Validation intent
+
+- Confirm supported files inside both environments are never scanned.
+- Confirm normal project source files remain discoverable.
+- Run the focused tests and repository quality checks.
+
+Checkpoint: untagged development maintenance
+
+🔖 **Tags**:
+- Type: `#chore`, `#maintenance`
+- Scope: `#virtual-environment`, `#scanner`, `#dockerignore`, `#quality`
+- Product: `#path-header-scanner`, `#developer-experience`

@@ -160,6 +160,45 @@ def test_scanner_ignores_git_directory(
     assert file_path not in files
 
 
+def test_scanner_ignores_named_virtual_environments(tmp_path: Path) -> None:
+    """Exclude dedicated development and production environments from scans.
+
+    Args:
+        tmp_path: Temporary directory containing representative environments.
+    """
+
+    ignored_files: list[Path] = []
+
+    for directory_name in (
+        "dev_venv",
+        "prod_venv",
+        "venv_dev",
+        "venv_prod",
+        "publish_venv",
+        "venv_publish",
+        "other_venv",
+        "venv_other",
+    ):
+        environment = tmp_path / directory_name
+        environment.mkdir()
+        file_path = environment / "dependency.py"
+        file_path.write_text('print("dependency")\n', encoding="utf-8")
+        ignored_files.append(file_path)
+
+    visible_file = tmp_path / "main.py"
+    visible_file.write_text('print("project")\n', encoding="utf-8")
+
+    scanner = FileScanner(
+        root_directory=tmp_path,
+        strategies=[PythonLanguageStrategy()],
+    )
+
+    files = scanner.scan()
+
+    assert visible_file in files
+    assert all(file_path not in files for file_path in ignored_files)
+
+
 def test_scanner_recursive_scan(
     tmp_path: Path,
 ) -> None:
