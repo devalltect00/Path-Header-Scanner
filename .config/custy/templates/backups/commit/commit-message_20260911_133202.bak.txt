@@ -1,0 +1,32 @@
+docs(project): add CLI preview and official contact
+
+Improve Path Header Scanner's repository presentation while moving public
+package and support metadata to the dedicated Devalltect contact address.
+
+### 🖼️ README presentation
+
+- Add the Path Header Scanner CLI preview near the top of the README.
+- Store the preview locally so it renders independently on GitHub and GitLab.
+- Preserve the existing badges, project overview, safety guidance, and usage
+  documentation.
+
+### 📧 Official project contact
+
+- Replace the previous personal address with `devalltect00@gmail.com` in the
+  README.
+- Update both author and maintainer email metadata for future Python package
+  builds.
+- Leave existing releases, package artifacts, tags, and Git history unchanged.
+
+### ✅ Validation
+
+- Confirm the previous email has no current working-tree references.
+- Validate the project metadata, README asset path, formatting, and Git diff.
+
+Tag: none
+Checkpoint: untagged documentation and metadata maintenance
+
+🔖 **Tags**:
+- Type: `#docs`, `#maintenance`
+- Scope: `#readme`, `#project-preview`, `#contact`, `#package-metadata`
+- Product: `#path-header-scanner`, `#developer-tool`

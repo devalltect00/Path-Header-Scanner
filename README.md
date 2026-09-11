@@ -2,6 +2,10 @@
 
 # 🧭 Path Header Scanner — Safe Repository Path Header Automation
 
+<p align="center">
+  <img src="docs/assets/path-header-scanner.png" alt="Path Header Scanner command-line interface" width="612">
+</p>
+
 ![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 ![Tag](https://img.shields.io/github/v/tag/devalltect00/Path-Header-Scanner)
 ![License](https://img.shields.io/github/license/devalltect00/Path-Header-Scanner)
@@ -373,8 +377,8 @@ See [`LICENSE`](LICENSE)
 - Existing special lines are preserved safely.
 - File updates preserve trailing newlines.
 
-📧 Contact: `rizkypffdev37@gmail.com`
+📧 Contact: `devalltect00@gmail.com`
 
 ---
 
-_Handcrafted with ❤️ by Devalltect / Rizky Fernandes_
+_Crafted with ❤️ by Devalltect / Rizky Fernandes_

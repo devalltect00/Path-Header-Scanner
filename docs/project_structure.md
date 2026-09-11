@@ -158,6 +158,8 @@ Common directories include:
 │   │   ├── design-patterns.md
 │   │   ├── diagrams.md
 │   │   └── workflow.md
+│   ├── assets
+│   │   └── path-header-scanner.png
 │   ├── developer-guide
 │   │   ├── blackbox
 │   │   │   └── ai-development-workflow.md
